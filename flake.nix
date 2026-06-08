@@ -1,13 +1,14 @@
 {
-  description = "NixOS from Scratch";
-
+  description = "Fumoctl's NixOS configuration";
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nix-flatpak.url = "github:gmodena/nix-flatpak";
-    disko = {
-      url = "github:nix-community/disko";
+    hyprland.url = "github:hyprwm/Hyprland/v0.55.0";
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.quickshell.follows = "quickshell";  # Use same quickshell version
     };
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -15,7 +16,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, hyprland, ... }@inputs: {
     nixosConfigurations.fumonix = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       # This makes 'inputs' available to configuration.nix and home.nix

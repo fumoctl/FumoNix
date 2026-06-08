@@ -98,9 +98,10 @@
   };
 
   xdg.configFile = {
-    "niri".source = config.lib.file.mkOutOfStoreSymlink ~/FumoNix/.config/hyprland;
-    "noctalia".source = config.lib.file.mkOutOfStoreSymlink ~/FumoNix/.config/noctalia;
-    "kitty".source = config.lib.file.mkOutOfStoreSymlink ~/FumoNix/kitty;
-    "fastfetch".source = config.lib.file.mkOutOfStoreSymlink ~/FumoNix/fastfetch;
+    "hypr".source = config.lib.file.mkOutOfStoreSymlink /home/fumoctl/FumoNix/.config/hypr;
+    #"noctalia".source = config.lib.file.mkOutOfStoreSymlink /home/fumoctl/FumoNix/.config/noctalia;
+    "foot".source = config.lib.file.mkOutOfStoreSymlink /home/fumoctl/FumoNix/.config/foot;
+    "fastfetch".source = config.lib.file.mkOutOfStoreSymlink /home/fumoctl/FumoNix/.config/fastfetch;
+    
   };
 }

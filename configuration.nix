@@ -183,13 +183,16 @@
   };
 
 
-  programs.hyprland.enable = true;
-
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
+  };
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
       xdg-desktop-portal-gtk
-      xdg-desktop-portal-hyprland
       gnome-keyring
     ];
     config.common = {
@@ -222,13 +225,15 @@
     libva-utils ffmpeg
 
     # Desktop
-    noctalia-shell
+    inputs.noctalia.packages.${system}.default
     kitty
     unstable.ratty
     file-roller
     tumbler
     resources
     xwayland-satellite
+    playerctl
+    swaybg
 
     # Media
     handbrake

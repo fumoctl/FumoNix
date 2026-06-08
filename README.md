@@ -1,9 +1,19 @@
 # FumoNix
 My ultimate NixOS config
+### Prerequisites
+* NixOS Installed (Minimal Preferred to avoid Home dir cluttering)
+* Replace the ```hardware-configuration.nix``` for the one generated when you installed NixOS (usually on ```/etc/nixos```)
+
+## Usage
+### Switch to config
 ```
-git clone https://github.com/fumoctl/FumoNix.git
-cd FumoNix
-sudo nix run 'github:nix-community/disko/latest' -- --mode destroy,format,mount --flake .#fumonix
-sudo nixos-install --flake .#fumonix --impure
-sudo nixos-enter --root /mnt -c 'passwd fumoctl'
+cd nixconf
+sudo nixos-rebuild boot --flake .#nixos-btw
+```
+
+### Update
+```
+cd nixconf
+sudo nix flake update
+sudo nixos-rebuild switch --flake .#nixos-btw
 ```
