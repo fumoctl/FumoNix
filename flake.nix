@@ -16,7 +16,7 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, ... }@inputs: {
-    nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.fumonix = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       # This makes 'inputs' available to configuration.nix and home.nix
       specialArgs = { inherit inputs; };
