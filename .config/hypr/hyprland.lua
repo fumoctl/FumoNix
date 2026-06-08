@@ -16,10 +16,10 @@ hl.monitor({
 ---------------------
 
 -- Set programs that you use
-local terminal    = "ratty"
+local terminal    = "foot"
 local fileManager = "thunar"
 local browser     = "brave"
-local ipc        = "noctalia msg"
+local ipc         = "noctalia-shell ipc call"
 
 
 -------------------
@@ -40,6 +40,7 @@ end)
 -------------------------------
 hl.env("XCURSOR_SIZE", "24")
 hl.env("XCURSOR_THEME", "Adwaita")
+hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
 
 -----------------------
@@ -203,16 +204,16 @@ hl.bind(main_mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Noctalia Shell keybinds
 -- Core binds
-hl.bind(main_mod .. " + Space", hl.dsp.exec_cmd(ipc .. " panel-toggle launcher"))
-hl.bind(main_mod .. " + S", hl.dsp.exec_cmd(ipc .. " panel-toggle control-center"))
-hl.bind(main_mod .. " + comma", hl.dsp.exec_cmd(ipc .. " settings-toggle"))
+hl.bind(main_mod .. " + Space", hl.dsp.exec_cmd(ipc .. " launcher toggle"))
+hl.bind(main_mod .. " + S", hl.dsp.exec_cmd(ipc .. " controlCenter toggle"))
+hl.bind(main_mod .. " + comma", hl.dsp.exec_cmd(ipc .. " settings toggle"))
 
 -- Media keys
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. " volume-up"))
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(ipc .. " volume-down"))
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd(ipc .. " volume-mute"))
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(ipc .. " brightness-up"))
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. " brightness-down"))
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. " volume increase"))
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd(ipc .. " volume decrease"))
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd(ipc .. " volume muteOutput"))
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd(ipc .. " brightness increase"))
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd(ipc .. " brightness decrease"))
 
 -- Requires playerctl
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })

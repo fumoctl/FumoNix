@@ -226,7 +226,7 @@
 
     # Desktop
     inputs.noctalia.packages.${system}.default
-    kitty
+    foot
     unstable.ratty
     file-roller
     tumbler
@@ -234,6 +234,11 @@
     xwayland-satellite
     playerctl
     swaybg
+    wl-clipboard
+    hyprshot
+    adw-gtk-theme nwg-look
+    kdePackages.qt6ct
+
 
     # Media
     handbrake
