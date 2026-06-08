@@ -5,7 +5,7 @@
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
 hl.monitor({
     output   = "",
-    mode     = "auto",
+    mode     = "preferred",
     position = "auto",
     scale    = "1",
 })
@@ -18,7 +18,8 @@ hl.monitor({
 -- Set programs that you use
 local terminal    = "ratty"
 local fileManager = "thunar"
-local menu        = "rofi -show drun"
+local browser     = "brave"
+local ipc        = "noctalia msg"
 
 
 -------------------
@@ -30,7 +31,7 @@ local menu        = "rofi -show drun"
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 hl.on("hyprland.start", function()
-    hl.exec_cmd("noctalia-shell")
+    hl.exec_cmd("noctalia-shell &")
 end)
 
 
@@ -175,7 +176,7 @@ hl.bind(main_mod .. " + Return", hl.dsp.exec_cmd(terminal))
 hl.bind(main_mod .. " + Q", hl.dsp.window.close())
 hl.bind(main_mod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(main_mod .. " + F", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(main_mod .. " + D", hl.dsp.exec_cmd(menu))
+hl.bind(main_mod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(main_mod .. " + P", hl.dsp.window.pseudo())
 
 -- Move focus with main_mod + arrow keys
@@ -201,11 +202,10 @@ hl.bind(main_mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(main_mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Noctalia Shell keybinds
-local ipc = "noctalia msg"
 -- Core binds
-hl.bind(mainMod .. "+Space", hl.dsp.exec_cmd(ipc .. " panel-toggle launcher"))
-hl.bind(mainMod .. "+S", hl.dsp.exec_cmd(ipc .. " panel-toggle control-center"))
-hl.bind(mainMod .. "+comma", hl.dsp.exec_cmd(ipc .. " settings-toggle"))
+hl.bind(main_mod .. " + Space", hl.dsp.exec_cmd(ipc .. " panel-toggle launcher"))
+hl.bind(main_mod .. " + S", hl.dsp.exec_cmd(ipc .. " panel-toggle control-center"))
+hl.bind(main_mod .. " + comma", hl.dsp.exec_cmd(ipc .. " settings-toggle"))
 
 -- Media keys
 hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd(ipc .. " volume-up"))
