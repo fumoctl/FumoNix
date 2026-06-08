@@ -235,8 +235,8 @@
     playerctl
     swaybg
     wl-clipboard
-    hyprshot
-    adw-gtk-theme nwg-look
+    unstable.hyprshot
+    adw-gtk3 nwg-look
     kdePackages.qt6ct
 
 
