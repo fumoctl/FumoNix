@@ -1,8 +1,8 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [
-    inputs.nix-flatpak.homeManagerModules.nix-flatpak
+    
   ];
 
   home.username = "fumoctl";
@@ -27,6 +27,7 @@
     '';
   };
 
+
   programs.git = {
     enable = true;
     signing = {
@@ -50,7 +51,6 @@
 
   programs.zsh = {
     enable = true;
-    dotDir = config.home.homeDirectory;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
@@ -58,11 +58,7 @@
       theme = "dpoggi";
       plugins = [ "git" "sudo" ];
     };
-    initContent = ''
-      fastfetch
-    '';
   };
-
   programs.chromium = {
     enable = true;
     package = pkgs.unstable.brave; # Critical: Points the Chromium module to the Brave binary
@@ -95,13 +91,5 @@
     configureFlatpakLanguages = lib.hm.dag.entryAfter ["writeBoundary"] ''
       ${pkgs.flatpak}/bin/flatpak config --user --set languages "en;ja"
     '';
-  };
-
-  xdg.configFile = {
-    "hypr".source = config.lib.file.mkOutOfStoreSymlink /home/fumoctl/FumoNix/.config/hypr;
-    #"noctalia".source = config.lib.file.mkOutOfStoreSymlink /home/fumoctl/FumoNix/.config/noctalia;
-    "foot".source = config.lib.file.mkOutOfStoreSymlink /home/fumoctl/FumoNix/.config/foot;
-    "fastfetch".source = config.lib.file.mkOutOfStoreSymlink /home/fumoctl/FumoNix/.config/fastfetch;
-    
   };
 }

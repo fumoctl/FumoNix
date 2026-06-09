@@ -1,7 +1,14 @@
-# FumoNix
-My ultimate NixOS config
+# Fumoctl's NixOS Config
+### Features
+* KDE Plasma
+* XanMod Kernel
+* Virtualization enabled by default (Podman and Qemu/KVM)
+* Systemd without userdb
+* Sane gaming defaults (Increased nofile limits and vm.max_map_count)
+* Quad9 DNS over TLS ONLY
+
 ### Prerequisites
-* NixOS Installed (Minimal Preferred to avoid Home dir cluttering)
+* NixOS Installed (Minimal or COSMIC Preferred to avoid Home dir cluttering)
 * Replace the ```hardware-configuration.nix``` for the one generated when you installed NixOS (usually on ```/etc/nixos```)
 
 ## Usage

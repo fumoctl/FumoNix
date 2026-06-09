@@ -115,8 +115,6 @@
       pkgs.unstable.lsfg-vk
     ];
   };
-  #comment when using nvidia
-  services.xserver.videoDrivers = [ "amdgpu" ];
 
   ## NVIDIA
   #services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
@@ -155,52 +153,14 @@
     extraLocales = [ "ja_JP.UTF-8/UTF-8" ];
   };
 
-  fonts = {
-    fontDir.enable = true;
-    packages = with pkgs; [
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      ipafont
-      kochi-substitute
-      liberation_ttf
-      nerd-fonts.symbols-only
-      nerd-fonts.ubuntu-mono
-      nerd-fonts.ubuntu
-      nerd-fonts.hack
-      nerd-fonts.fira-code
-      nerd-fonts.jetbrains-mono
-      
-    ];
-  };
-
-  services.displayManager.ly = {
-    enable = true;
-    # Ajustes opcionales (por defecto ya funciona bien)
-    settings = {
-      animation = "matrix"; # Efecto matrix de fondo (opcional)
-      # hide_borders = true;  # Más limpio
-    };
-  };
-
-
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
-  };
-  xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      gnome-keyring
-    ];
-    config.common = {
-      "org.freedesktop.impl.portal.FileChooser" = "gtk";
-      "org.freedesktop.impl.portal.ScreenCast" = "hyprland";
-      "org.freedesktop.impl.portal.Secret" = "gnome-keyring";
-    };
-  };
+  services.desktopManager.cosmic.enable = true;
+  environment.cosmic.excludePackages = with pkgs; [
+    cosmic-player
+    cosmic-term
+    cosmic-reader
+  ];
+  services.displayManager.cosmic-greeter.enable = true;
+  programs.kdeconnect.enable = true;
 
   users.users.fumoctl = {
     isNormalUser = true;
@@ -213,44 +173,27 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # Nix utilities
-    nixd nixpkgs-fmt
-
-    # General utilities
-    neovim wget micro nano
-    git file sbctl fuse rclone
-    dnsmasq waypipe _7zz unrar
-    fastfetch appimage-run ethtool
-    pciutils mesa-demos vulkan-tools
-    libva-utils ffmpeg
-
-    # Desktop
-    inputs.noctalia.packages.${system}.default
-    foot
-    unstable.ratty
-    file-roller
-    tumbler
-    resources
-    xwayland-satellite
-    playerctl
-    swaybg
-    wl-clipboard
-    unstable.hyprshot
-    adw-gtk3 nwg-look
-    kdePackages.qt6ct
-
-
-    # Media
-    handbrake
-    gthumb
+    nixd
+    nixpkgs-fmt
+    neovim
+    wget
+    git
+    file
+    sbctl
+    dnsmasq
+    waypipe
+    unstable.vscode-fhs
+    unstable.winboat
+    onlyoffice-desktopeditors
+    _7zz
+    unrar
+    fastfetch
+    thunderbird
     mpv
-    lollypop
-
-    # Dev tools
-    unstable.vscode-fhs unstable.renpy
-
-    # Gaming
-    mangohud goverlay lact
+    appimage-run
+    mangohud
+    goverlay
+    lact
     unstable.lsfg-vk-ui
     (pkgs.unstable.heroic.override {
       extraPkgs = p: [
@@ -258,34 +201,15 @@
         pkgs.unstable.gamemode
       ];
     })
-    
-    # Web & Office
-    unstable.proton-vpn unstable.librewolf
-    unstable.winboat onlyoffice-desktopeditors thunderbird
-    
-    # Misc
+    ethtool
+    pciutils
+    mesa-demos
+    unstable.renpy
     unstable.haskellPackages.misfortune
     unstable.cowsay
     unstable.lolcat
-    
+    unstable.proton-vpn
   ];
-
-  programs.thunar = {
-    enable = true;
-    plugins = with pkgs; [
-      thunar-archive-plugin
-      thunar-volman
-    ]; 
-  };
-  services.tumbler.enable = true;
-  programs.xfconf.enable = true;
-
-  services.gvfs.enable = true;
-  services.udisks2.enable = true;
-  services.dbus.enable = true;
-  programs.dconf.enable = true;
-
-  programs.fuse.userAllowOther = true;
 
   programs.direnv = {
     enable = true;
@@ -302,7 +226,7 @@
     enable = true;
   };
 
-  services.flatpak.enable = true;
+  programs.firefox.enable = true;
 
   programs.gamescope.enable = true;
   programs.gamemode.enable = true;
@@ -313,11 +237,44 @@
     gamescopeSession.enable = true;
   };
 
+  services.flatpak={
+    enable = true;
+    packages = [
+      "io.gitlab.librewolf-community"
+      "org.garudalinux.firedragon"
+      "org.qbittorrent.qBittorrent"
+      "com.github.tchx84.Flatseal"
+      "com.obsproject.Studio"
+      "website.i2pd.i2pd"
+      "com.usebottles.bottles"
+      "com.vysp3r.ProtonPlus"
+      "com.github.Matoking.protontricks"
+      "com.discordapp.Discord"
+    ];
+  };
   # Dynamically linked executables
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
 
   ];
+
+  fonts = {
+    fontDir.enable = true;
+    packages = with pkgs; [
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      ipafont
+      kochi-substitute
+      liberation_ttf
+      nerd-fonts.symbols-only
+      nerd-fonts.ubuntu-mono
+      nerd-fonts.ubuntu
+      nerd-fonts.hack
+      nerd-fonts.fira-code
+      nerd-fonts.jetbrains-mono
+
+    ];
+  };
 
   virtualisation = {
     libvirtd = {
@@ -344,4 +301,5 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
   system.stateVersion = "25.11";
+
 }
