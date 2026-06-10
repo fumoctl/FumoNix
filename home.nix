@@ -2,7 +2,7 @@
 
 {
   imports = [
-    
+    nix-flatpak.homeManagerModules.nix-flatpak
   ];
 
   home.username = "fumoctl";
