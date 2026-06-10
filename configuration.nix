@@ -176,6 +176,7 @@
     nixd
     nixpkgs-fmt
     neovim
+    kitty
     wget
     git
     file
