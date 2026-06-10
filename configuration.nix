@@ -158,6 +158,7 @@
     cosmic-player
     cosmic-term
     cosmic-reader
+    cosmic-store
   ];
   services.displayManager.cosmic-greeter.enable = true;
   programs.kdeconnect.enable = true;
