@@ -51,6 +51,7 @@
 
   programs.zsh = {
     enable = true;
+    dotDir = config.home.homeDirectory;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
     oh-my-zsh = {
@@ -85,6 +86,7 @@
       enable = true;
       onCalendar = "daily";
     };
+    uninstallUnmanaged = false;
     overrides.settings."com.usebottles.bottles".Context.filesystems = [ "home" ];
   };
   home.activation = {

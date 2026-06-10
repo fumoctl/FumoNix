@@ -1,6 +1,6 @@
 # Fumoctl's NixOS Config
 ### Features
-* KDE Plasma
+* COSMIC Desktop Environment
 * XanMod Kernel
 * Virtualization enabled by default (Podman and Qemu/KVM)
 * Systemd without userdb
@@ -14,13 +14,13 @@
 ## Usage
 ### Switch to config
 ```
-cd nixconf
-sudo nixos-rebuild boot --flake .#nixos-btw
+cd FumoNix
+sudo nixos-rebuild boot --flake .#fumonix
 ```
 
 ### Update
 ```
-cd nixconf
+cd FumoNix
 sudo nix flake update
-sudo nixos-rebuild switch --flake .#nixos-btw
+sudo nixos-rebuild switch --flake .#fumonix
 ```

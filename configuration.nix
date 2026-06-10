@@ -160,6 +160,9 @@
     cosmic-reader
     cosmic-store
   ];
+  environment.sessionVariables = {
+    QT_QPA_PLATFORMTHEME = "cosmic";
+  };
   services.displayManager.cosmic-greeter.enable = true;
   programs.kdeconnect.enable = true;
 
@@ -176,8 +179,9 @@
   environment.systemPackages = with pkgs; [
     nixd
     nixpkgs-fmt
+    cutecosmic
     neovim
-    kitty
+    unstable.ptyxis
     wget
     git
     file
@@ -186,12 +190,14 @@
     waypipe
     unstable.vscode-fhs
     unstable.winboat
-    onlyoffice-desktopeditors
+    unstable.onlyoffice-desktopeditors
     _7zz
     unrar
     fastfetch
     thunderbird
     mpv
+    gthumb
+    lollypop
     appimage-run
     mangohud
     goverlay
@@ -241,19 +247,9 @@
 
   services.flatpak={
     enable = true;
-    packages = [
-      "io.gitlab.librewolf-community"
-      "org.garudalinux.firedragon"
-      "org.qbittorrent.qBittorrent"
-      "com.github.tchx84.Flatseal"
-      "com.obsproject.Studio"
-      "website.i2pd.i2pd"
-      "com.usebottles.bottles"
-      "com.vysp3r.ProtonPlus"
-      "com.github.Matoking.protontricks"
-      "com.discordapp.Discord"
-    ];
+    uninstallUnmanaged = true;
   };
+  
   # Dynamically linked executables
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
