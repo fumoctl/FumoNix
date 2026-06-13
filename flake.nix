@@ -1,5 +1,5 @@
 {
-  description = "NixOS from Scratch";
+  description = "Fumoctl's ultimate NixOS configuration";
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-26.05";

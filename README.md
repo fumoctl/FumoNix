@@ -5,7 +5,7 @@
 * Virtualization enabled by default (Podman and Qemu/KVM)
 * Systemd without userdb
 * Sane gaming defaults (Increased nofile limits and vm.max_map_count)
-* Quad9 DNS over TLS ONLY
+* Adguard DNS over TLS ONLY
 
 ### Prerequisites
 * NixOS Installed (Minimal or COSMIC Preferred to avoid Home dir cluttering)
