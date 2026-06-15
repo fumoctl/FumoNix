@@ -7,7 +7,7 @@
 
   home.username = "fumoctl";
   home.homeDirectory = "/home/fumoctl";
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
 
   home.file.".ssh/config_source" = {
     text = ''
@@ -81,6 +81,7 @@
       "com.vysp3r.ProtonPlus"
       "com.github.Matoking.protontricks"
       "com.discordapp.Discord"
+      "com.ranfdev.DistroShelf"
     ];
     update.auto = {
       enable = true;

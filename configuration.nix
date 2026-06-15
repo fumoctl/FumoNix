@@ -156,7 +156,6 @@
   services.desktopManager.cosmic.enable = true;
   environment.cosmic.excludePackages = with pkgs; [
     cosmic-player
-    cosmic-term
     cosmic-reader
     cosmic-store
   ];
@@ -182,6 +181,7 @@
     cutecosmic
     neovim
     unstable.ptyxis
+    resources
     wget
     git
     file
@@ -191,6 +191,7 @@
     unstable.vscode-fhs
     unstable.winboat
     unstable.onlyoffice-desktopeditors
+    distrobox
     _7zz
     unrar
     fastfetch
@@ -284,6 +285,7 @@
         vhostUserPackages = with pkgs; [ virtiofsd ];
       };
     };
+    docker.enable = false; # Disable Docker if using Podman
     podman = {
       enable = true;
       dockerCompat = true; # Aliases docker -> podman
@@ -298,6 +300,6 @@
   documentation.man.cache.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
-  system.stateVersion = "25.11";
+  system.stateVersion = "26.05";
 
 }
