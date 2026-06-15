@@ -16,6 +16,7 @@
   ];
 
   boot.loader.limine.enable = true;
+  boot.loader.limine.secureBoot.enable = false;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
   boot.kernelModules = [ "ntsync" ];
