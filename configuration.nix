@@ -118,14 +118,16 @@
   };
 
   ## NVIDIA
-  #services.xserver.videoDrivers = [ "modesetting" "nvidia" ];
+  #services.xserver.videoDrivers = [ "nvidia" ];
   #hardware.nvidia = {
   #  modesetting.enable = true;
   #  open = true;
+  #  powerManagement.enable = true;
+  #  powerManagement.finegrained = true;
   #  nvidiaSettings = true;
   #  #Comment these when not using dual gpus on laptops
   #  prime = {
-  #   offload.enable = true;
+  #    offload.enable = true;
   #    offload.enableOffloadCmd = true; # This creates the `nvidia-offload` script
   #    # Replace these with the corresponding value from the lspci command ```nix-shell -p pciutils --run "lspci"```
   #    #intelBusId = "PCI:0:2:0"; 
@@ -162,6 +164,7 @@
   ];
   environment.sessionVariables = {
     QT_QPA_PLATFORMTHEME = "cosmic";
+    COSMIC_DATA_CONTROL_ENABLED = "1";
   };
   services.displayManager.cosmic-greeter.enable = true;
   programs.kdeconnect.enable = true;
@@ -192,6 +195,7 @@
     unstable.vscode-fhs
     unstable.winboat
     unstable.onlyoffice-desktopeditors
+    meld
     distrobox
     _7zz
     unrar
