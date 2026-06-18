@@ -137,10 +137,11 @@
   #};
 
 
-  #Power Profiles Daemon
-  services.power-profiles-daemon.enable = true;
+  #Power Management
+  services.power-profiles-daemon.enable = false;
+  hardware.system76.power-daemon.enable = true;
 
-  ## TUXEDO Drivers (Disable Power Profiles Daemon when using this)
+  ## TUXEDO Drivers
   #hardware.tuxedo-drivers.enable = true;
   #hardware.tuxedo-rs = {
   #  enable = true;
@@ -173,7 +174,7 @@
     isNormalUser = true;
     autoSubUidGidRange = true;
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "adm" ];
     packages = with pkgs; [
 
     ];
