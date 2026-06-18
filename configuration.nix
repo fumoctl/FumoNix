@@ -218,7 +218,8 @@
     unstable.haskellPackages.misfortune
     unstable.cowsay
     unstable.lolcat
-    unstable.proton-vpn
+    unstable.proton-vpn-cli
+    sshuttle
   ];
 
   programs.direnv = {

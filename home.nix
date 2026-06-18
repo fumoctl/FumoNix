@@ -80,8 +80,9 @@
       "com.usebottles.bottles"
       "com.vysp3r.ProtonPlus"
       "com.github.Matoking.protontricks"
-      "com.discordapp.Discord"
+      "dev.vencord.Vesktop"
       "com.ranfdev.DistroShelf"
+      "com.protonvpn.www"
     ];
     update.auto = {
       enable = true;
