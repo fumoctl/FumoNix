@@ -13,6 +13,7 @@
         config.allowUnfree = true;
       };
     })
+    inputs.antigravity-nix.overlays.default
   ];
 
   boot.loader.limine.enable = true;
@@ -193,7 +194,10 @@
     sbctl
     dnsmasq
     waypipe
-    unstable.vscode-fhs
+    unstable.vscodium-fhs
+    google-antigravity
+    google-antigravity-ide
+    google-antigravity-cli
     unstable.winboat
     unstable.onlyoffice-desktopeditors
     meld
