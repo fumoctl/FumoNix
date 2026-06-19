@@ -139,7 +139,7 @@
 
   #Power Management
   services.power-profiles-daemon.enable = false;
-  hardware.system76.power-daemon.enable = true;
+  hardware.system76.enableAll = true;
 
   ## TUXEDO Drivers
   #hardware.tuxedo-drivers.enable = true;
