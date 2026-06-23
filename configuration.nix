@@ -16,8 +16,10 @@
     inputs.antigravity-nix.overlays.default
   ];
 
-  boot.loader.limine.enable = true;
-  boot.loader.limine.secureBoot.enable = false;
+  boot.loader.limine = {
+    enable = true;
+    secureBoot.enable = false;
+  };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
   boot.kernelModules = [ "ntsync" ];
@@ -214,12 +216,7 @@
     goverlay
     lact
     unstable.lsfg-vk-ui
-    (pkgs.unstable.heroic.override {
-      extraPkgs = p: [
-        pkgs.unstable.gamescope
-        pkgs.unstable.gamemode
-      ];
-    })
+    unstable.lutris
     ethtool
     pciutils
     mesa-demos
