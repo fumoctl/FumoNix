@@ -27,7 +27,6 @@
     '';
   };
 
-
   programs.git = {
     enable = true;
     signing = {

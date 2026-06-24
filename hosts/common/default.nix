@@ -1,11 +1,6 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-    ];
-
   nixpkgs.overlays = [
     (final: prev: {
       unstable = import inputs.nixpkgs-unstable {
@@ -18,7 +13,7 @@
 
   boot.loader.limine = {
     enable = true;
-    secureBoot.enable = false;
+    secureBoot.enable = true;
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
@@ -40,7 +35,6 @@
   ];
 
   networking = {
-    hostName = "nixos";
     resolvconf.useLocalResolver = true;
     nameservers = [ "127.0.0.1" "::1" ];
     networkmanager = {
@@ -120,36 +114,9 @@
     ];
   };
 
-  ## NVIDIA
-  #services.xserver.videoDrivers = [ "nvidia" ];
-  #hardware.nvidia = {
-  #  modesetting.enable = true;
-  #  open = true;
-  #  powerManagement.enable = true;
-  #  powerManagement.finegrained = true;
-  #  nvidiaSettings = true;
-  #  #Comment these when not using dual gpus on laptops
-  #  prime = {
-  #    offload.enable = true;
-  #    offload.enableOffloadCmd = true; # This creates the `nvidia-offload` script
-  #    # Replace these with the corresponding value from the lspci command ```nix-shell -p pciutils --run "lspci"```
-  #    #intelBusId = "PCI:0:2:0"; 
-  #    amdgpuBusId = "PCI:66:0:0";
-  #    nvidiaBusId = "PCI:64:0:0";
-  #  };
-  #};
-
-
-  #Power Management
+  # Power Management
   services.power-profiles-daemon.enable = false;
   hardware.system76.enableAll = true;
-
-  ## TUXEDO Drivers
-  #hardware.tuxedo-drivers.enable = true;
-  #hardware.tuxedo-rs = {
-  #  enable = true;
-  #  tailor-gui.enable = true;
-  #};   
 
   # GPU Daemon (Overclocking/Fan control)
   services.lact.enable = true;
@@ -308,6 +275,4 @@
   documentation.man.cache.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
-  system.stateVersion = "26.05";
-
 }

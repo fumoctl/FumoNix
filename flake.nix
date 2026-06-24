@@ -16,23 +16,44 @@
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, antigravity-nix, ... }@inputs: {
-    nixosConfigurations.fumonix = nixpkgs.lib.nixosSystem {
-      # This makes 'inputs' available to configuration.nix and home.nix
-      specialArgs = { inherit inputs; };
-      modules = [
-        ./configuration.nix
-        home-manager.nixosModules.home-manager
-        nix-flatpak.nixosModules.nix-flatpak
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.fumoctl = import ./home.nix;
-            extraSpecialArgs = { inherit inputs; }; # Also pass to Home Manager
-            backupFileExtension = "backup";
-          };
-        }
-      ];
+    nixosConfigurations = {
+      fumonix-laptop = nixpkgs.lib.nixosSystem {
+        # This makes 'inputs' available to configuration.nix and home.nix
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/laptop/default.nix
+          home-manager.nixosModules.home-manager
+          nix-flatpak.nixosModules.nix-flatpak
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.fumoctl = import ./hosts/common/home.nix;
+              extraSpecialArgs = { inherit inputs; }; # Also pass to Home Manager
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
+
+      fumonix-desktop = nixpkgs.lib.nixosSystem {
+        # This makes 'inputs' available to configuration.nix and home.nix
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./hosts/desktop/default.nix
+          home-manager.nixosModules.home-manager
+          nix-flatpak.nixosModules.nix-flatpak
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.fumoctl = import ./hosts/common/home.nix;
+              extraSpecialArgs = { inherit inputs; }; # Also pass to Home Manager
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
     };
   };
 }
