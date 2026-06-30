@@ -1,5 +1,7 @@
 { config, lib, pkgs, ... }:
 
+# Tuxedo InfinityBook Max 15 - Gen10 - AMD
+
 {
   imports = [
     ../common/default.nix
@@ -30,6 +32,12 @@
     enable = true;
     tailor-gui.enable = true;
   };
+
+  # Motorcomm YT6801 Gigabit Ethernet driver
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.yt6801
+  ];
+  boot.kernelModules = [ "yt6801" ];
 
   system.stateVersion = "26.05";
 }
