@@ -35,6 +35,7 @@
   ];
 
   networking = {
+    nftables.enable = true;
     resolvconf.useLocalResolver = true;
     nameservers = [ "127.0.0.1" "::1" ];
     networkmanager = {
@@ -47,38 +48,39 @@
         connection = {
           "ipv4.ignore-auto-dns" = true;
           "ipv6.ignore-auto-dns" = true;
+          "wifi.cloned-mac-address" = "stable-temporary";
+          "ethernet.cloned-mac-address" = "stable-temporary";
+          "ipv6.ip6-privacy" = 2;
+        };
+        device = {
+          "wifi.scan-rand-mac-address" = "yes";
         };
       };
     };
     firewall = {
+      enable = true;
       allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
       allowedUDPPortRanges = [{ from = 1714; to = 1764; }];
     };
   };
   services.resolved.enable = false;
-  services.stubby = {
+  services.unbound = {
     enable = true;
     settings = {
-      listen_addresses = [ "127.0.0.1" "0::1" ];
-      resolution_type = "GETDNS_RESOLUTION_STUB";
-      dns_transport_list = [ "GETDNS_TRANSPORT_TLS" ];
-      tls_authentication = "GETDNS_AUTHENTICATION_REQUIRED";
-      upstream_recursive_servers = [
+      server = {
+        interface = [ "127.0.0.1" "::1" ];
+        access-control = [ "127.0.0.1/32 allow" "::1/128 allow" ];
+      };
+      forward-zone = [
         {
-          address_data = "94.140.14.14";
-          tls_auth_name = "dns.adguard-dns.com";
-        }
-        {
-          address_data = "94.140.15.15";
-          tls_auth_name = "dns.adguard-dns.com";
-        }
-        {
-          address_data = "2a10:50c0::ad1:ff";
-          tls_auth_name = "dns.adguard-dns.com";
-        }
-        {
-          address_data = "2a10:50c0::ad2:ff";
-          tls_auth_name = "dns.adguard-dns.com";
+          name = ".";
+          forward-tls-upstream = true;
+          forward-addr = [
+            "94.140.14.14@853#dns.adguard-dns.com"
+            "94.140.15.15@853#dns.adguard-dns.com"
+            "2a10:50c0::ad1:ff@853#dns.adguard-dns.com"
+            "2a10:50c0::ad2:ff@853#dns.adguard-dns.com"
+          ];
         }
       ];
     };
@@ -291,6 +293,8 @@
         "network.prefetch-next" = false;
         "browser.ml.chat.enabled" = false;         # Turns off default local AI integrations/network calls
         "browser.ml.linkPreview.enabled" = false;
+        "dom.security.https_only_mode" = true;
+        "privacy.trackingprotection.enabled" = true;
       };
     };
   };
