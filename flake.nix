@@ -9,13 +9,9 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    antigravity-nix = {
-      url = "github:jacopone/antigravity-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, antigravity-nix, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, ... }@inputs: {
     nixosConfigurations = {
       fumonix-laptop = nixpkgs.lib.nixosSystem {
         # This makes 'inputs' available to configuration.nix and home.nix
