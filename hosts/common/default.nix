@@ -12,7 +12,7 @@
 
   boot.loader.limine = {
     enable = true;
-    secureBoot.enable = true;
+    secureBoot.enable = false;
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
