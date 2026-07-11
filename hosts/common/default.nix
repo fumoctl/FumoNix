@@ -17,6 +17,9 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
   boot.kernelModules = [ "ntsync" ];
+  boot.kernelParams = [
+    "amdgpu.runpm=0"
+  ];   
 
   boot.kernel.sysctl = {
     "vm.max_map_count" = 2147483642; # SteamOS default
@@ -122,23 +125,32 @@
   # GPU Daemon (Overclocking/Fan control)
   services.lact.enable = true;
 
+  # Mouse
+  services.libinput = {
+    enable = true;
+    
+    mouse = {
+      # "flat" disables acceleration (1:1 movement)
+      accelProfile = "flat";
+      # Optional: Adjust sensitivity if needed (-1.0 to 1.0), 0 is default
+      # accelSpeed = "0"; 
+    };
+  };
+
   time.timeZone = "America/Asuncion";
   i18n = {
     defaultLocale = "en_US.UTF-8";
     extraLocales = [ "ja_JP.UTF-8/UTF-8" ];
   };
 
-  services.desktopManager.cosmic.enable = true;
-  environment.cosmic.excludePackages = with pkgs; [
-    cosmic-player
-    cosmic-reader
-    cosmic-store
-  ];
-  environment.sessionVariables = {
-    QT_QPA_PLATFORMTHEME = "cosmic";
-    COSMIC_DATA_CONTROL_ENABLED = "1";
+  services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
   };
-  services.displayManager.cosmic-greeter.enable = true;
+  environment.sessionVariables = {
+    QT_QPA_PLATFORM = "wayland";
+  };
   programs.kdeconnect.enable = true;
 
   users.users.fumoctl = {
@@ -154,10 +166,9 @@
   environment.systemPackages = with pkgs; [
     nixd
     nixpkgs-fmt
-    cutecosmic
     neovim
     unstable.ptyxis
-    resources
+    kdePackages.plasma-browser-integration
     wget
     git
     file
@@ -174,8 +185,6 @@
     fastfetch
     thunderbird
     mpv
-    gthumb
-    lollypop
     appimage-run
     mangohud
     goverlay

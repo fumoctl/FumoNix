@@ -2,7 +2,7 @@
 
 ### Features
 
-- COSMIC Desktop Environment
+- KDE Plasma
 - XanMod Kernel
 - Virtualization enabled by default (Podman and Qemu/KVM)
 - Systemd without userdb
@@ -13,7 +13,7 @@
 
 ### Prerequisites
 
-- NixOS Installed (Minimal or COSMIC Preferred to avoid Home dir cluttering)
+- NixOS Installed (Minimal or KDE Preferred to avoid Home dir cluttering)
 - Replace the `hardware-configuration.nix` for the one generated when you installed NixOS (usually on `/etc/nixos`)
 
 ## Usage
