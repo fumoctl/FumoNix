@@ -140,6 +140,7 @@
       captureEntireDesktop = "Meta+Print";
       captureRectangularRegion = "Meta+Shift+Print";
       captureActiveWindow = "Meta+Ctrl+Print";
+      launch = "";
     };
 
     configFile = {
