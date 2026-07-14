@@ -16,7 +16,7 @@
     modesetting.enable = true;
     open = true;
     powerManagement.enable = true;
-    powerManagement.finegrained = true;
+    powerManagement.finegrained = false;
     nvidiaSettings = true;
     prime = {
       offload.enable = true;
@@ -37,6 +37,7 @@
   boot.extraModulePackages = [
     config.boot.kernelPackages.yt6801
   ];
+  
   boot.kernelModules = [ "yt6801" ];
 
   system.stateVersion = "26.05";
