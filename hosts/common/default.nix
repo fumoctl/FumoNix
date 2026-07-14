@@ -18,9 +18,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
   boot.kernelModules = [ "ntsync" ];
-  boot.kernelParams = [
-    "amdgpu.runpm=0"
-  ];   
 
   boot.kernel.sysctl = {
     "vm.max_map_count" = 2147483642; # SteamOS default
