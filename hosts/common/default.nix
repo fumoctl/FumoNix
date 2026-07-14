@@ -118,7 +118,7 @@
 
   # Power Management
   services.power-profiles-daemon.enable = true;
-  hardware.system76.enableAll = true;
+  hardware.system76.enableAll = false;
 
   # GPU Daemon (Overclocking/Fan control)
   services.lact.enable = true;
