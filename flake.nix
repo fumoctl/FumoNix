@@ -14,9 +14,17 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+    scopebuddy = {
+      url = "github:HikariKnight/ScopeBuddy";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    abacusai-nix = {
+      url = "github:fumoctl/AbacusAI-Nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, plasma-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, plasma-manager, scopebuddy, ... }@inputs: {
     nixosConfigurations = {
       fumonix-laptop = nixpkgs.lib.nixosSystem {
         # This makes 'inputs' available to configuration.nix and home.nix

@@ -8,6 +8,7 @@
         config.allowUnfree = true;
       };
     })
+    inputs.abacusai-nix.overlays.default
   ];
 
   boot.loader.limine = {
@@ -190,7 +191,23 @@
     goverlay
     lact
     unstable.lsfg-vk-ui
-    unstable.lutris
+    inputs.scopebuddy.packages.${pkgs.stdenv.hostPlatform.system}.default
+    (pkgs.heroic.override {
+        extraPkgs = pkgs': with pkgs'; [
+          winetricks
+          zenity          # Required for Winetricks GUI dialogs
+          wget
+          cabextract
+          unrar
+          unzip
+          gtk3            # Required for GUI themes
+          adwaita-icon-theme
+          gamemode
+          gamescope
+          mangohud
+        ];
+    })   
+    jq
     ethtool
     pciutils
     mesa-demos
@@ -200,6 +217,8 @@
     unstable.lolcat
     unstable.proton-vpn-cli
     sshuttle
+    abacusai-desktop
+    abacusai-cli
   ];
 
   programs.direnv = {
