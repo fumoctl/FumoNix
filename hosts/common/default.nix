@@ -120,7 +120,7 @@
   };
 
   # Power Management
-  services.power-profiles-daemon.enable = false;
+  services.power-profiles-daemon.enable = true;
   hardware.system76.enableAll = true;
 
   # GPU Daemon (Overclocking/Fan control)
