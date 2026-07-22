@@ -6,6 +6,7 @@
     podman = {
       enable = true;
       dockerCompat = true; # Aliases docker -> podman
+      dockerSocket.enable = true;
       defaultNetwork.settings.dns_enabled = true;
     };
   };
@@ -15,6 +16,7 @@
       podman-compose
       helm
       kubectl
+      kind
   ];
 
   # Enable Podman backend

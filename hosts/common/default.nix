@@ -158,7 +158,7 @@
     isNormalUser = true;
     autoSubUidGidRange = true;
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "adm" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "adm" "docker" "podman" ];
     packages = with pkgs; [
 
     ];
