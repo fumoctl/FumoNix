@@ -26,7 +26,7 @@
   virtualisation.oci-containers.containers = {
     podman-hello = {
       image = "quay.io/podman/hello";
-      autoStart = false;
+      autoStart = true;
     };
   };
 }
