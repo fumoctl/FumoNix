@@ -166,6 +166,7 @@
     neovim
     unstable.ptyxis
     kdePackages.plasma-browser-integration
+    kdePackages.kamoso
     wget
     git
     file
