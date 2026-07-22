@@ -1,6 +1,10 @@
 { config, lib, pkgs, inputs, ... }:
 
 {
+  imports = [
+    ./containers.nix
+  ];
+
   nixpkgs.overlays = [
     (final: prev: {
       unstable = import inputs.nixpkgs-unstable {
@@ -369,13 +373,6 @@
         swtpm.enable = true; # TPM support for Windows 11 VMs
         vhostUserPackages = with pkgs; [ virtiofsd ];
       };
-    };
-    docker.enable = false; # Disable Docker if using Podman
-    podman = {
-      enable = true;
-      dockerCompat = true; # Aliases docker -> podman
-      defaultNetwork.settings.dns_enabled = true;
-      extraPackages = [ pkgs.podman-compose ];
     };
   };
 
