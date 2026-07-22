@@ -20,7 +20,7 @@
     };
     abacusai-nix = {
       url = "github:fumoctl/AbacusAI-Nix";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 

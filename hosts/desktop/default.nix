@@ -5,6 +5,8 @@
     ../common/default.nix
     ./hardware-configuration.nix
   ];
+
+  boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
   
   boot.kernelParams = [
     "amdgpu.runpm=0"

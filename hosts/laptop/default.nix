@@ -10,6 +10,8 @@
 
   networking.hostName = "fumonix-laptop";
 
+  boot.kernelPackages = pkgs.unstable.linuxPackages;
+
   # NVIDIA
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {

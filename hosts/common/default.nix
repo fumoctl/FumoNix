@@ -16,7 +16,6 @@
     secureBoot.enable = false;
   };
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
   boot.kernelModules = [ "ntsync" ];
 
   boot.kernel.sysctl = {
@@ -174,7 +173,6 @@
     dnsmasq
     waypipe
     unstable.vscodium-fhs
-    unstable.winboat
     unstable.onlyoffice-desktopeditors
     meld
     distrobox
