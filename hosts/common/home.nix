@@ -96,7 +96,7 @@
       onCalendar = "daily";
     };
     uninstallUnmanaged = false;
-    overrides.settings."com.usebottles.bottles".Context.filesystems = [ "home" ];
+    overrides.settings."com.usebottles.bottles".filesystems = [ "home" ];
   };
   home.activation = {
     configureFlatpakLanguages = lib.hm.dag.entryAfter ["writeBoundary"] ''
