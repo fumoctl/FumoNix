@@ -23,10 +23,7 @@
   virtualisation.oci-containers.backend = "podman";
 
   # Define your containers
-  virtualisation.oci-containers.containers = {
-    podman-hello = {
-      image = "quay.io/podman/hello";
-      autoStart = true;
-    };
-  };
+  #virtualisation.oci-containers.containers = {
+  #  
+  #};
 }
