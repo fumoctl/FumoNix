@@ -23,7 +23,11 @@
   virtualisation.oci-containers.backend = "podman";
 
   # Define your containers
-  #virtualisation.oci-containers.containers = {
-  #  
-  #};
+  virtualisation.oci-containers.containers = {
+    my-service = {
+      image = "docker.io/nginx:alpine";
+      autoStart = true;
+      podman.user = "fumoctl";
+    };
+  };
 }

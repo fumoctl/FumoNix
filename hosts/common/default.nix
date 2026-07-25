@@ -157,8 +157,9 @@
   users.users.fumoctl = {
     isNormalUser = true;
     autoSubUidGidRange = true;
+    linger = true;
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "adm" "docker" "podman" ];
+    extraGroups = [ "networkmanager" "wheel" "libvirtd" "adm" "docker" "podman" "OCI" ];
     packages = with pkgs; [
 
     ];
