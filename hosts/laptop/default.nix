@@ -42,5 +42,11 @@
   
   boot.kernelModules = [ "yt6801" ];
 
+  programs.captive-browser = {
+    enable = true;
+    interface = "wlp98s0"; # Replace with your network interface
+    # Optional: customize browser or socks5-addr
+  };
+
   system.stateVersion = "26.05";
 }
