@@ -7,7 +7,7 @@
   ];
 
   boot.loader.limine = {
-    secureBoot.enable = false;
+    secureBoot.enable = true;
   };
 
   boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
