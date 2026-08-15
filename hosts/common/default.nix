@@ -20,6 +20,7 @@
     secureBoot.enable = false;
   };
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
   boot.kernelModules = [ "ntsync" ];
 
   boot.kernel.sysctl = {
