@@ -6,6 +6,10 @@
     ./hardware-configuration.nix
   ];
 
+  boot.loader.limine = {
+    secureBoot.enable = false;
+  };
+
   boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
   
   boot.kernelParams = [

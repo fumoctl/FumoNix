@@ -10,6 +10,10 @@
 
   networking.hostName = "fumonix-laptop";
 
+  boot.loader.limine = {
+    secureBoot.enable = false;
+  };
+
   boot.kernelPackages = pkgs.unstable.linuxPackages;
 
   # NVIDIA

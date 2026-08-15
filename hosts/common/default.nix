@@ -17,7 +17,6 @@
 
   boot.loader.limine = {
     enable = true;
-    secureBoot.enable = false;
   };
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
