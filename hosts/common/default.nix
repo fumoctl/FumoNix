@@ -171,6 +171,7 @@
   environment.systemPackages = with pkgs; [
     nixd
     nixpkgs-fmt
+    nixfmt
     neovim
     unstable.ptyxis
     kdePackages.plasma-browser-integration
