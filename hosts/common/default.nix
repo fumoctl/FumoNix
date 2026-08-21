@@ -152,10 +152,14 @@
     enable = true;
     wayland.enable = true;
   };
-  environment.sessionVariables = {
-    QT_QPA_PLATFORM = "wayland";
-  };
   programs.kdeconnect.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-kde
+    ];
+  };
 
   users.users.fumoctl = {
     isNormalUser = true;
