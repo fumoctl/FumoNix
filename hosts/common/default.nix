@@ -13,6 +13,7 @@
       };
     })
     inputs.abacusai-nix.overlays.default
+    inputs.nyarch-nix.overlays.default
   ];
 
   boot.loader.limine = {
@@ -200,7 +201,6 @@
     goverlay
     lact
     unstable.lsfg-vk-ui
-    inputs.scopebuddy.packages.${pkgs.stdenv.hostPlatform.system}.default
     (pkgs.heroic.override {
         extraPkgs = pkgs': with pkgs'; [
           winetricks
@@ -228,6 +228,8 @@
     sshuttle
     abacusai-desktop
     abacusai-cli
+    nyarchassistant
+    catgirldownloader
   ];
 
   programs.direnv = {
