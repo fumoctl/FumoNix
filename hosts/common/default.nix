@@ -12,7 +12,7 @@
         config.allowUnfree = true;
       };
     })
-    inputs.abacusai-nix.overlays.default
+    inputs.antigravity-nix.overlays.default
     inputs.nyarch-nix.overlays.default
   ];
 
@@ -226,8 +226,9 @@
     unstable.lolcat
     unstable.proton-vpn-cli
     sshuttle
-    abacusai-desktop
-    abacusai-cli
+    google-antigravity
+    google-antigravity-ide
+    google-antigravity-cli
     nyarchassistant
     catgirldownloader
   ];

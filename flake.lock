@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "abacusai-nix": {
+    "antigravity-nix": {
       "inputs": {
         "flake-utils": "flake-utils",
         "nixpkgs": [
@@ -8,16 +8,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1787775507,
-        "narHash": "sha256-Rts/c+BLjy5/Xmd8af9sXRLejJiT0a8oL3iNeyGoV8A=",
-        "owner": "fumoctl",
-        "repo": "AbacusAI-Nix",
-        "rev": "1340ca6d19085fe1e0908284d3001474bb18eccb",
+        "lastModified": 1787826217,
+        "narHash": "sha256-cqvukKd9jzytRTvPwsFOy2SO81Ch9fpRzSbimlT+f3E=",
+        "owner": "jacopone",
+        "repo": "antigravity-nix",
+        "rev": "cc74d8ab4679b432e5697b70140869e467564f4a",
         "type": "github"
       },
       "original": {
-        "owner": "fumoctl",
-        "repo": "AbacusAI-Nix",
+        "owner": "jacopone",
+        "repo": "antigravity-nix",
         "type": "github"
       }
     },
@@ -110,11 +110,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1787498568,
-        "narHash": "sha256-FoOSoBG7tEvOlGRTpWnVdY506Ner4y7r7UYO3OGgmE8=",
-        "rev": "56c02bc00adcf003215cc4bd996d6efaf4cff188",
+        "lastModified": 1787736819,
+        "narHash": "sha256-IkjmqLoWzeqBAi1VIkdhDLMGjQDJ4suEDp59Zwxpswg=",
+        "rev": "9fbb54b33e91ee4ca368e35a78e0613c720600b3",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1060451.56c02bc00adc/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1062397.9fbb54b33e91/nixexprs.tar.xz"
       },
       "original": {
         "id": "nixpkgs",
@@ -130,11 +130,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787296971,
-        "narHash": "sha256-7QPbA3ZVQJebQWkPAxC+IPNt5TpPht0yBoVVwt6g4q0=",
+        "lastModified": 1787788544,
+        "narHash": "sha256-8oWmwu9qgKaWRVNzo8IleWLrNxhxnTapofXF6gexod8=",
         "owner": "fumoctl",
         "repo": "Nyarch-Nix",
-        "rev": "11824e44df3eaec0931977ee8555fd9d0c6d79e2",
+        "rev": "9096addf5600f0a71de1216fc6804a912481f82b",
         "type": "github"
       },
       "original": {
@@ -168,7 +168,7 @@
     },
     "root": {
       "inputs": {
-        "abacusai-nix": "abacusai-nix",
+        "antigravity-nix": "antigravity-nix",
         "home-manager": "home-manager",
         "nix-flatpak": "nix-flatpak",
         "nixpkgs": "nixpkgs",

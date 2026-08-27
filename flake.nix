@@ -18,8 +18,8 @@
       url = "github:fumoctl/Nyarch-Nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    abacusai-nix = {
-      url = "github:fumoctl/AbacusAI-Nix";
+    antigravity-nix = {
+      url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
