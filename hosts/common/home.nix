@@ -1,4 +1,10 @@
-{ config, pkgs, inputs, lib, ... }:
+{
+  config,
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 
 {
   imports = [
@@ -10,7 +16,8 @@
   home.homeDirectory = "/home/fumoctl";
   home.stateVersion = "26.05";
   home.packages = with pkgs; [
-    
+    unstable.proton-vpn
+    unstable.proton-vpn-cli
   ];
 
   home.file.".ssh/config_source" = {
@@ -60,7 +67,10 @@
     oh-my-zsh = {
       enable = true;
       theme = "dpoggi";
-      plugins = [ "git" "sudo" ];
+      plugins = [
+        "git"
+        "sudo"
+      ];
     };
   };
   programs.google-chrome = {
@@ -80,18 +90,22 @@
       "com.github.Matoking.protontricks"
       "dev.vencord.Vesktop"
       "com.ranfdev.DistroShelf"
-      "com.protonvpn.www"
     ];
     update.auto = {
       enable = true;
       onCalendar = "daily";
     };
     uninstallUnmanaged = false;
-    overrides.settings."com.usebottles.bottles".filesystems = [ "home" ];
   };
   home.activation = {
-    configureFlatpakLanguages = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    configureFlatpakLanguages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       ${pkgs.flatpak}/bin/flatpak config --user --set languages "en;ja"
+    '';
+    fixobsqt = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      ${pkgs.flatpak}/bin/flatpak override --user --unset-env=QT_PLUGIN_PATH --unset-env=LD_LIBRARY_PATH --unset-env=QT_QPA_PLATFORM_PLUGIN_PATH com.obsproject.Studio
+    '';
+    overrideBottles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      ${pkgs.flatpak}/bin/flatpak override --user --filesystem=home com.usebottles.bottles
     '';
   };
 
@@ -141,9 +155,9 @@
         "Windows" = {
           # Options: ClickToFocus (default), FocusFollowsMouse, FocusUnderMouse, FocusStrictlyUnderMouse
           "FocusPolicy" = "FocusFollowsMouse";
-          
+
           # Optional: Delay in milliseconds before focusing (0 = instant)
-          "DelayFocusInterval" = 0; 
+          "DelayFocusInterval" = 0;
         };
       };
     };

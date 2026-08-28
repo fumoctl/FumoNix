@@ -1,4 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -41,7 +47,10 @@
   networking = {
     nftables.enable = true;
     resolvconf.useLocalResolver = true;
-    nameservers = [ "127.0.0.1" "::1" ];
+    nameservers = [
+      "127.0.0.1"
+      "::1"
+    ];
     networkmanager = {
       enable = true;
       dns = "none";
@@ -63,8 +72,18 @@
     };
     firewall = {
       enable = true;
-      allowedTCPPortRanges = [{ from = 1714; to = 1764; }];
-      allowedUDPPortRanges = [{ from = 1714; to = 1764; }];
+      allowedTCPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
+      allowedUDPPortRanges = [
+        {
+          from = 1714;
+          to = 1764;
+        }
+      ];
     };
   };
   services.resolved.enable = false;
@@ -72,8 +91,14 @@
     enable = true;
     settings = {
       server = {
-        interface = [ "127.0.0.1" "::1" ];
-        access-control = [ "127.0.0.1/32 allow" "::1/128 allow" ];
+        interface = [
+          "127.0.0.1"
+          "::1"
+        ];
+        access-control = [
+          "127.0.0.1/32 allow"
+          "::1/128 allow"
+        ];
       };
       forward-zone = [
         {
@@ -130,12 +155,12 @@
   # Mouse
   services.libinput = {
     enable = true;
-    
+
     mouse = {
       # "flat" disables acceleration (1:1 movement)
       accelProfile = "flat";
       # Optional: Adjust sensitivity if needed (-1.0 to 1.0), 0 is default
-      # accelSpeed = "0"; 
+      # accelSpeed = "0";
     };
   };
 
@@ -167,7 +192,15 @@
     autoSubUidGidRange = true;
     linger = true;
     shell = pkgs.zsh;
-    extraGroups = [ "networkmanager" "wheel" "libvirtd" "adm" "docker" "podman" "OCI" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "libvirtd"
+      "adm"
+      "docker"
+      "podman"
+      "OCI"
+    ];
     packages = with pkgs; [
 
     ];
@@ -201,21 +234,6 @@
     goverlay
     lact
     unstable.lsfg-vk-ui
-    (pkgs.heroic.override {
-        extraPkgs = pkgs': with pkgs'; [
-          winetricks
-          zenity          # Required for Winetricks GUI dialogs
-          wget
-          cabextract
-          unrar
-          unzip
-          gtk3            # Required for GUI themes
-          adwaita-icon-theme
-          gamemode
-          gamescope
-          mangohud
-        ];
-    })   
     jq
     ethtool
     pciutils
@@ -224,7 +242,6 @@
     unstable.haskellPackages.misfortune
     unstable.cowsay
     unstable.lolcat
-    unstable.proton-vpn-cli
     sshuttle
     google-antigravity
     google-antigravity-ide
@@ -250,7 +267,7 @@
 
   programs.firefox = {
     enable = true;
-    
+
     # System-wide enterprise policies
     policies = {
       # 1. Telemetry, Studies & Data Collection (Total Lockdown)
@@ -259,7 +276,7 @@
       DisableTelemetryServer = true;
       DisablePocket = true;
       DisableFirefoxAccounts = false; # Set to true if you do not use Firefox Sync
-      
+
       # 2. Set Default Search Engine to Brave Search
       SearchEngines = {
         Default = "Brave Search";
@@ -272,7 +289,12 @@
             Description = "Privacy-respecting search engine by Brave";
           }
         ];
-        Remove = [ "Google" "Bing" "Amazon.com" "eBay" ]; # Clean out tracking-heavy defaults
+        Remove = [
+          "Google"
+          "Bing"
+          "Amazon.com"
+          "eBay"
+        ]; # Clean out tracking-heavy defaults
       };
 
       # 3. Streamlined Extensions Setup (uBlock Origin + LocalCDN)
@@ -301,7 +323,7 @@
         Fingerprinting = true;
         EmailTracking = true;
       };
-      
+
       FirefoxHome = {
         Pocket = false;
         Snippets = false;
@@ -324,10 +346,10 @@
       Preferences = {
         "privacy.privacyandsecurity.fingerprinting.protection" = true;
         "privacy.query_stripping.enabled" = true; # Strips tracking tokens (like fbclid, utm_) from URLs
-        "media.peerconnection.enabled" = false;    # Prevents WebRTC from leaking your real IP behind a VPN
-        "network.dns.disablePrefetch" = true;      # Stops DNS lookups to links before you click them
+        "media.peerconnection.enabled" = false; # Prevents WebRTC from leaking your real IP behind a VPN
+        "network.dns.disablePrefetch" = true; # Stops DNS lookups to links before you click them
         "network.prefetch-next" = false;
-        "browser.ml.chat.enabled" = false;         # Turns off default local AI integrations/network calls
+        "browser.ml.chat.enabled" = false; # Turns off default local AI integrations/network calls
         "browser.ml.linkPreview.enabled" = false;
         "dom.security.https_only_mode" = true;
         "privacy.trackingprotection.enabled" = true;
@@ -346,12 +368,11 @@
   };
   hardware.steam-hardware.enable = true;
 
-
-  services.flatpak={
+  services.flatpak = {
     enable = true;
     uninstallUnmanaged = true;
   };
-  
+
   # Dynamically linked executables
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
@@ -392,6 +413,9 @@
   services.spice-vdagentd.enable = true; # Clipboard sharing with VMs
 
   documentation.man.cache.enable = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
   nixpkgs.config.allowUnfree = true;
 }
