@@ -4,6 +4,7 @@
   imports = [
     ../common/default.nix
     ./hardware-configuration.nix
+    ./disko.nix
   ];
 
   boot.loader.limine = {
