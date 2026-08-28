@@ -17,18 +17,9 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 
 ---
 
-## 🖥️ Hosts Overview
-
-| Hostname | Type | Target Hardware / Specs | Disk Scheme |
-| :--- | :--- | :--- | :--- |
-| **`fumonix-desktop`** | Desktop | AMD CPU + AMD GPU, SecureBoot enabled | Disko (1G ESP, LUKS + Btrfs subvolumes `@`, `@home`, `@nix`, `@log`, `@snapshots`, `@swap`) |
-| **`fumonix-laptop`** | Laptop | Tuxedo InfinityBook Max 15 (Gen 10 AMD + NVIDIA Hybrid) | Tuxedo drivers & control center, PRIME offload |
-
----
-
 ## 🚀 Installation Guide
 
-### Option A: Installing an Existing Host (`fumonix-desktop`)
+### Option A: Installing an Existing Host (`fumonix-desktop` example)
 
 1. **Boot into the NixOS Live USB**.
 2. **Verify target disk ID**:
@@ -37,12 +28,15 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
    ls -l /dev/disk/by-id/
    ```
 3. **Partition, format, and mount with Disko**:
+
    ```bash
    sudo nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko --flake github:fumoctl/FumoNix#fumonix-desktop
    ```
-   *(Or clone the repo locally and use `--flake .#fumonix-desktop`)*
+
+   _(Or clone the repo locally and use `--flake .#fumonix-desktop`)_
 
 4. **Install NixOS**:
+
    ```bash
    sudo nixos-install --flake github:fumoctl/FumoNix#fumonix-desktop
    ```
@@ -61,7 +55,7 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
    ```bash
    nixos-generate-config --no-filesystems --show-hardware-config
    ```
-   *(The `--no-filesystems` flag avoids hardcoding mounts and UUIDs since Disko manages storage).*
+   _(The `--no-filesystems` flag avoids hardcoding mounts and UUIDs since Disko manages storage)._
 3. **Create the new host configuration**:
    - Create `hosts/<hostname>/`:
      - `hardware-configuration.nix` (paste the output from step 2).
@@ -80,17 +74,20 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 ## 🛠️ Post-Install & Daily Usage
 
 ### Rebuild and Switch Configuration
+
 ```bash
 cd FumoNix
 sudo nixos-rebuild switch --flake .#fumonix-<hostname>
 ```
 
 ### Test Configuration (Boot Only)
+
 ```bash
 sudo nixos-rebuild boot --flake .#fumonix-<hostname>
 ```
 
 ### Update Flake Inputs
+
 ```bash
 cd FumoNix
 nix flake update
