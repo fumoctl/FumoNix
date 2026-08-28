@@ -242,6 +242,7 @@
     unstable.haskellPackages.misfortune
     unstable.cowsay
     unstable.lolcat
+    unstable.equibop
     sshuttle
     google-antigravity
     google-antigravity-ide

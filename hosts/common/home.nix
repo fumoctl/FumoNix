@@ -98,7 +98,6 @@
       "com.usebottles.bottles"
       "com.vysp3r.ProtonPlus"
       "com.github.Matoking.protontricks"
-      "dev.vencord.Vesktop"
       "com.ranfdev.DistroShelf"
     ];
     update.auto = {
