@@ -73,11 +73,21 @@
       ];
     };
   };
-  programs.google-chrome = {
+  programs.chromium = {
     enable = true;
-    # Optional: Specify command-line args or enable KDE integration
-    plasmaSupport = true; # Enables the native messaging host for KDE
+    package = pkgs.unstable.brave; # Critical: Points the Chromium module to the Brave binary
+    extensions = [
+      { id = "ghmbeldphafepmbegfdlkpapadhbakde"; } # Proton Pass
+      { id = "cimiefiiaegbelhefglklhhakcgmhkai"; } # Plasma Integration
+      { id = "ldpochfccmkkmhdbclfhpagapcfdljkj"; } # Decentraleyes
+      { id = "pkehgijcmpdhfbdbbnkijodmdjhbjlgp"; } # Privacy Badger
+
+    ];
   };
+  home.file.".config/BraveSoftware/Brave-Browser/NativeMessagingHosts/org.kde.plasma.browser_integration.json" =
+    {
+      source = "${pkgs.kdePackages.plasma-browser-integration}/etc/chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json";
+    };
 
   services.flatpak = {
     enable = true;

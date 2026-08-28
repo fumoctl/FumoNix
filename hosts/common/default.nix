@@ -246,6 +246,7 @@
     google-antigravity
     google-antigravity-ide
     google-antigravity-cli
+    google-chrome
     nyarchassistant
     catgirldownloader
   ];
