@@ -6,6 +6,7 @@
   imports = [
     ../common/default.nix
     ./hardware-configuration.nix
+    ./disko.nix
   ];
 
   networking.hostName = "fumonix-laptop";

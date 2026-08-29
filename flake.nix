@@ -34,6 +34,7 @@
         # This makes 'inputs' available to configuration.nix and home.nix
         specialArgs = { inherit inputs; };
         modules = [
+          disko.nixosModules.disko
           ./hosts/laptop/default.nix
           home-manager.nixosModules.home-manager
           nix-flatpak.nixosModules.nix-flatpak
