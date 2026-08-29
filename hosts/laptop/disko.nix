@@ -3,7 +3,7 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/disk/by-id/nvme-UPULTR7K-4TSD_UPULTR7K4T25090017";
+        device = "/dev/disk/by-id/nvme-WD_Blue_SN5100_1TB_25453U402530";
         content = {
           type = "gpt";
           partitions = {
