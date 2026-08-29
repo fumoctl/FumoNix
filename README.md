@@ -57,10 +57,11 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
    ```
    _(The `--no-filesystems` flag avoids hardcoding mounts and UUIDs since Disko manages storage)._
 3. **Create the new host configuration**:
-   - Create `hosts/<hostname>/`:
-     - `hardware-configuration.nix` (paste the output from step 2).
-     - `disko.nix` (specify the target disk ID and partition scheme).
-     - `default.nix` (import `../common/default.nix`, `./hardware-configuration.nix`, and `./disko.nix`).
+    - Create `hosts/<hostname>/`:
+      - `hardware-configuration.nix` (paste the output from step 2).
+      - `disko.nix` (specify the target disk ID and partition scheme).
+      - `containers.nix` (host-specific container and Podman configuration).
+      - `default.nix` (import `../common/default.nix`, `./hardware-configuration.nix`, `./disko.nix`, and `./containers.nix`).
    - Add the host definition under `nixosConfigurations.<hostname>` in [flake.nix](file:///home/fumoctl/FumoNix/flake.nix).
 4. **Partition and Install**:
    ```bash

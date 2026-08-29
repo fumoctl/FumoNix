@@ -7,6 +7,7 @@
     ../common/default.nix
     ./hardware-configuration.nix
     ./disko.nix
+    ./containers.nix
   ];
 
   networking.hostName = "fumonix-laptop";

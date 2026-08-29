@@ -7,9 +7,6 @@
 }:
 
 {
-  imports = [
-    ./containers.nix
-  ];
 
   nixpkgs.overlays = [
     (final: prev: {

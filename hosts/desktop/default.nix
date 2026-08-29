@@ -5,6 +5,7 @@
     ../common/default.nix
     ./hardware-configuration.nix
     ./disko.nix
+    ./containers.nix
   ];
 
   boot.loader.limine = {

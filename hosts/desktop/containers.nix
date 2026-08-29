@@ -11,12 +11,12 @@
     };
   };
   environment.systemPackages = with pkgs; [
-      podman-tui
-      podman-desktop
-      podman-compose
-      helm
-      kubectl
-      kind
+    podman-tui
+    podman-desktop
+    podman-compose
+    helm
+    kubectl
+    kind
   ];
 
   # Enable Podman backend
