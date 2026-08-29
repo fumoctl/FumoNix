@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [
@@ -8,17 +13,17 @@
     ./containers.nix
   ];
 
+  networking.hostName = "fumonix-desktop";
+
   boot.loader.limine = {
     secureBoot.enable = true;
   };
 
   boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
-  
+
   boot.kernelParams = [
     "amdgpu.runpm=0"
   ];
-  
-  networking.hostName = "fumonix-desktop";
 
   system.stateVersion = "26.05";
 }

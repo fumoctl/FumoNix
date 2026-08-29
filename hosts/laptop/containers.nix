@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   virtualisation = {
@@ -16,7 +21,6 @@
     podman-compose
     helm
     kubectl
-    kind
   ];
 
   # Enable Podman backend

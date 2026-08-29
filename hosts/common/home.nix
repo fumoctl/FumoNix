@@ -94,7 +94,6 @@
     packages = [
       "com.github.tchx84.Flatseal"
       "com.obsproject.Studio"
-      "website.i2pd.i2pd"
       "com.usebottles.bottles"
       "com.vysp3r.ProtonPlus"
       "com.github.Matoking.protontricks"
@@ -113,7 +112,7 @@
     fixobsqt = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       ${pkgs.flatpak}/bin/flatpak override --user --unset-env=QT_PLUGIN_PATH --unset-env=LD_LIBRARY_PATH --unset-env=QT_QPA_PLATFORM_PLUGIN_PATH com.obsproject.Studio
     '';
-    overrideBottles = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    overrideBottlesFsHome = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       ${pkgs.flatpak}/bin/flatpak override --user --filesystem=home com.usebottles.bottles
     '';
   };
