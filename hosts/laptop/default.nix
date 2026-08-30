@@ -16,7 +16,7 @@
     secureBoot.enable = false;
   };
 
-  boot.kernelPackages = pkgs.unstable.linuxPackages;
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-zen4;
 
   # NVIDIA
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -45,7 +45,7 @@
   boot.extraModulePackages = [
     config.boot.kernelPackages.yt6801
   ];
-  
+
   boot.kernelModules = [ "yt6801" ];
 
   programs.captive-browser = {

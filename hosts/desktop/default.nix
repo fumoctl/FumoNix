@@ -1,8 +1,7 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 
 {
@@ -19,7 +18,7 @@
     secureBoot.enable = true;
   };
 
-  boot.kernelPackages = pkgs.unstable.linuxPackages_xanmod_latest;
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-zen4;
 
   boot.kernelParams = [
     "amdgpu.runpm=0"

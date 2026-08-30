@@ -1,9 +1,8 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
+{ config
+, lib
+, pkgs
+, inputs
+, ...
 }:
 
 {
@@ -17,6 +16,7 @@
     })
     inputs.antigravity-nix.overlays.default
     inputs.nyarch-nix.overlays.default
+    inputs.nix-cachyos-kernel.overlays.pinned
   ];
 
   boot.loader.limine = {
@@ -412,9 +412,17 @@
   services.spice-vdagentd.enable = true; # Clipboard sharing with VMs
 
   documentation.man.cache.enable = true;
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+    extra-substituters = [
+      "https://attic.xuyh0120.win/lantian"
+    ];
+    extra-trusted-public-keys = [
+      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+    ];
+  };
   nixpkgs.config.allowUnfree = true;
 }
