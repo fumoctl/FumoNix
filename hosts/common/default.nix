@@ -1,8 +1,9 @@
-{ config
-, lib
-, pkgs
-, inputs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
 
 {
@@ -43,17 +44,14 @@
 
   networking = {
     nftables.enable = true;
-    resolvconf.useLocalResolver = true;
-    nameservers = [
-      "127.0.0.1"
-      "::1"
-    ];
+
+    # Hand off local resolution directly to systemd-resolved
     networkmanager = {
       enable = true;
-      dns = "none";
+      dns = "systemd-resolved";
       settings = {
         main = {
-          dns = "none";
+          dns = "systemd-resolved";
         };
         connection = {
           "ipv4.ignore-auto-dns" = true;
@@ -67,6 +65,7 @@
         };
       };
     };
+
     firewall = {
       enable = true;
       allowedTCPPortRanges = [
@@ -83,34 +82,32 @@
       ];
     };
   };
-  services.resolved.enable = false;
-  services.unbound = {
+  # Disable unbound
+  services.unbound.enable = false;
+  # Enable systemd-resolved with AdGuard DNS-over-TLS
+  services.resolved = {
     enable = true;
     settings = {
-      server = {
-        interface = [
-          "127.0.0.1"
-          "::1"
+      Resolve = {
+        dnssec = "true";
+        dnsovertls = "true";
+        DNS = [
+          "94.140.14.14#dns.adguard-dns.com"
+          "94.140.15.15#dns.adguard-dns.com"
+          "2a10:50c0::ad1:ff#dns.adguard-dns.com"
+          "2a10:50c0::ad2:ff#dns.adguard-dns.com"
         ];
-        access-control = [
-          "127.0.0.1/32 allow"
-          "::1/128 allow"
+        fallbackDns = [
+          "94.140.14.14#dns.adguard-dns.com"
+          "94.140.15.15#dns.adguard-dns.com"
+          "2a10:50c0::ad1:ff#dns.adguard-dns.com"
+          "2a10:50c0::ad2:ff#dns.adguard-dns.com"
         ];
+        Domains = [ "~." ];
       };
-      forward-zone = [
-        {
-          name = ".";
-          forward-tls-upstream = true;
-          forward-addr = [
-            "94.140.14.14@853#dns.adguard-dns.com"
-            "94.140.15.15@853#dns.adguard-dns.com"
-            "2a10:50c0::ad1:ff@853#dns.adguard-dns.com"
-            "2a10:50c0::ad2:ff@853#dns.adguard-dns.com"
-          ];
-        }
-      ];
     };
   };
+
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
 

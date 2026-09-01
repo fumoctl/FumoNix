@@ -16,8 +16,7 @@
   home.homeDirectory = "/home/fumoctl";
   home.stateVersion = "26.05";
   home.packages = with pkgs; [
-    unstable.proton-vpn
-    unstable.proton-vpn-cli
+
   ];
 
   home.file.".ssh/config_source" = {
