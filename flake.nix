@@ -4,6 +4,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     disko = {
       url = "github:nix-community/disko";
@@ -26,7 +27,6 @@
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
   };
 
   nixConfig = {
@@ -38,47 +38,58 @@
     ];
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-flatpak, plasma-manager, disko, ... }@inputs: {
-    nixosConfigurations = {
-      fumonix-laptop = nixpkgs.lib.nixosSystem {
-        # This makes 'inputs' available to configuration.nix and home.nix
-        specialArgs = { inherit inputs; };
-        modules = [
-          disko.nixosModules.disko
-          ./hosts/laptop/default.nix
-          home-manager.nixosModules.home-manager
-          nix-flatpak.nixosModules.nix-flatpak
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.fumoctl = import ./hosts/common/home.nix;
-              extraSpecialArgs = { inherit inputs; }; # Also pass to Home Manager
-              backupFileExtension = "backup";
-            };
-          }
-        ];
-      };
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      home-manager,
+      nix-flatpak,
+      plasma-manager,
+      disko,
+      ...
+    }@inputs:
+    {
+      nixosConfigurations = {
+        fumonix-laptop = nixpkgs.lib.nixosSystem {
+          # This makes 'inputs' available to configuration.nix and home.nix
+          specialArgs = { inherit inputs; };
+          modules = [
+            disko.nixosModules.disko
+            ./hosts/laptop/default.nix
+            home-manager.nixosModules.home-manager
+            nix-flatpak.nixosModules.nix-flatpak
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.fumoctl = import ./hosts/common/home.nix;
+                extraSpecialArgs = { inherit inputs; }; # Also pass to Home Manager
+                backupFileExtension = "backup";
+              };
+            }
+          ];
+        };
 
-      fumonix-desktop = nixpkgs.lib.nixosSystem {
-        # This makes 'inputs' available to configuration.nix and home.nix
-        specialArgs = { inherit inputs; };
-        modules = [
-          disko.nixosModules.disko
-          ./hosts/desktop/default.nix
-          home-manager.nixosModules.home-manager
-          nix-flatpak.nixosModules.nix-flatpak
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.fumoctl = import ./hosts/common/home.nix;
-              extraSpecialArgs = { inherit inputs; }; # Also pass to Home Manager
-              backupFileExtension = "backup";
-            };
-          }
-        ];
+        fumonix-desktop = nixpkgs.lib.nixosSystem {
+          # This makes 'inputs' available to configuration.nix and home.nix
+          specialArgs = { inherit inputs; };
+          modules = [
+            disko.nixosModules.disko
+            ./hosts/desktop/default.nix
+            home-manager.nixosModules.home-manager
+            nix-flatpak.nixosModules.nix-flatpak
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.fumoctl = import ./hosts/common/home.nix;
+                extraSpecialArgs = { inherit inputs; }; # Also pass to Home Manager
+                backupFileExtension = "backup";
+              };
+            }
+          ];
+        };
       };
     };
-  };
 }
