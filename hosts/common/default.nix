@@ -8,7 +8,7 @@
 
 {
   imports = [
-    inputs.nur.repos.claymorwan.nixosModules.pvpn
+    inputs.pvpn-nix.nixosModules.pvpn
   ];
 
   programs.pvpn = {

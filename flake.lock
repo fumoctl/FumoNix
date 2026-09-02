@@ -249,6 +249,22 @@
         "type": "indirect"
       }
     },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1787964612,
+        "narHash": "sha256-0N9nghg3nwzX6b6qc77EzjR9cu/Z+UR66FlfsCqiURs=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "e8be7818e19ada32105a8af937a6a473b38167ca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": "flake-parts_2",
@@ -314,6 +330,24 @@
         "type": "github"
       }
     },
+    "pvpn-nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1788351793,
+        "narHash": "sha256-LgcvzttJxz3yq0lVwpncCGY8Rq998NKy498Hp099XH8=",
+        "owner": "fumoctl",
+        "repo": "pVPN-Nix",
+        "rev": "ae8cfae498e909c8bc689bbca96c8599d29eeefc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "fumoctl",
+        "repo": "pVPN-Nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "antigravity-nix": "antigravity-nix",
@@ -325,7 +359,8 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "nyarch-nix": "nyarch-nix",
-        "plasma-manager": "plasma-manager"
+        "plasma-manager": "plasma-manager",
+        "pvpn-nix": "pvpn-nix"
       }
     },
     "systems": {

@@ -7,7 +7,7 @@
     nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
     nur = {
       url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
     nix-flatpak.url = "github:gmodena/nix-flatpak/?ref=latest";
     disko = {
@@ -31,6 +31,7 @@
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+    pvpn-nix.url = "github:fumoctl/pVPN-Nix";
   };
 
   nixConfig = {
