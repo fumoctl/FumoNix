@@ -8,8 +8,15 @@
 
 {
   imports = [
-
+    inputs.nur.repos.claymorwan.nixosModules.pvpn
   ];
+
+  programs.pvpn = {
+    enable = true;
+    users = [
+      "fumoctl"
+    ];
+  };
 
   nixpkgs.overlays = [
     (final: prev: {
