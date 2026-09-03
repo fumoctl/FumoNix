@@ -76,9 +76,6 @@
   programs.vscode = {
     enable = true;
     package = pkgs.unstable.vscode;
-    enableUpdateCheck = false;
-    enableExtensionUpdateCheck = true;
-    # Manage extensions manually / let VS Code sync them
     mutableExtensionsDir = true;
   };
 
