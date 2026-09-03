@@ -224,7 +224,7 @@
     sbctl
     dnsmasq
     waypipe
-    unstable.vscodium-fhs
+    unstable.vscode-fhs
     unstable.onlyoffice-desktopeditors
     meld
     distrobox
@@ -249,7 +249,6 @@
     unstable.equibop
     sshuttle
     google-antigravity
-    google-antigravity-ide
     google-antigravity-cli
     google-chrome
     nyarchassistant
