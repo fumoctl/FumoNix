@@ -224,7 +224,6 @@
     sbctl
     dnsmasq
     waypipe
-    unstable.vscode-fhs
     unstable.onlyoffice-desktopeditors
     meld
     distrobox

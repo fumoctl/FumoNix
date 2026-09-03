@@ -72,6 +72,16 @@
       ];
     };
   };
+
+  programs.vscode = {
+    enable = true;
+    package = pkgs.unstable.vscode;
+    enableUpdateCheck = false;
+    enableExtensionUpdateCheck = true;
+    # Manage extensions manually / let VS Code sync them
+    mutableExtensionsDir = true;
+  };
+
   programs.chromium = {
     enable = true;
     package = pkgs.unstable.brave; # Critical: Points the Chromium module to the Brave binary
