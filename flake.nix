@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-26.05";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -31,15 +31,14 @@
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    pvpn-nix.url = "github:fumoctl/pVPN-Nix";
   };
 
   nixConfig = {
     extra-substituters = [
-      "https://attic.xuyh0120.win/lantian"
+      "https://nyx-cache.chaotic.cx"
     ];
     extra-trusted-public-keys = [
-      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
+      "nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk="
     ];
   };
 
@@ -52,6 +51,7 @@
       nix-flatpak,
       plasma-manager,
       disko,
+      chaotic,
       ...
     }@inputs:
     {
@@ -64,6 +64,9 @@
             ./hosts/laptop/default.nix
             home-manager.nixosModules.home-manager
             nix-flatpak.nixosModules.nix-flatpak
+            chaotic.nixosModules.nyx-cache
+            chaotic.nixosModules.nyx-overlay
+            chaotic.nixosModules.nyx-registry
             {
               home-manager = {
                 useGlobalPkgs = true;
@@ -84,6 +87,9 @@
             ./hosts/desktop/default.nix
             home-manager.nixosModules.home-manager
             nix-flatpak.nixosModules.nix-flatpak
+            chaotic.nixosModules.nyx-cache
+            chaotic.nixosModules.nyx-overlay
+            chaotic.nixosModules.nyx-registry
             {
               home-manager = {
                 useGlobalPkgs = true;

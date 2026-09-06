@@ -18,7 +18,7 @@
     secureBoot.enable = true;
   };
 
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-zen4;
+  boot.kernelPackages = pkgs.linuxPackages_cachyos-lto-znver4;
 
   boot.kernelParams = [
     "amdgpu.runpm=0"

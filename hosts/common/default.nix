@@ -8,15 +8,8 @@
 
 {
   imports = [
-    inputs.pvpn-nix.nixosModules.pvpn
+    
   ];
-
-  programs.pvpn = {
-    enable = true;
-    users = [
-      "fumoctl"
-    ];
-  };
 
   nixpkgs.overlays = [
     (final: prev: {
@@ -27,7 +20,6 @@
     })
     inputs.antigravity-nix.overlays.default
     inputs.nyarch-nix.overlays.default
-    inputs.nix-cachyos-kernel.overlays.pinned
   ];
 
   boot.loader.limine = {
@@ -369,6 +361,10 @@
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
     gamescopeSession.enable = true;
+    extraCompatPackages = with pkgs; [
+      proton-cachyos_x86_64_v3
+      proton-ge-custom
+    ];
   };
   hardware.steam-hardware.enable = true;
 
@@ -422,12 +418,7 @@
       "nix-command"
       "flakes"
     ];
-    extra-substituters = [
-      "https://attic.xuyh0120.win/lantian"
-    ];
-    extra-trusted-public-keys = [
-      "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc="
-    ];
+    trusted-users = [ "root" "@wheel" ];
   };
   nixpkgs.config.allowUnfree = true;
 }

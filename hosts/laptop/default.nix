@@ -16,13 +16,14 @@
     secureBoot.enable = false;
   };
 
-  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-lts-lto-zen4;
+  boot.kernelPackages = pkgs.linuxPackages_cachyos-lto-znver4;
 
   # NVIDIA
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
     open = true;
+    package = pkgs.nvidia_cachyos-lto;
     powerManagement.enable = true;
     powerManagement.finegrained = false;
     nvidiaSettings = true;
