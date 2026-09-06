@@ -1,5 +1,6 @@
 { pkgs
 , inputs
+, config
 , ...
 }:
 
@@ -22,9 +23,9 @@
     imageScalingMode = "fill";
 
     cursor = {
-      package = pkgs.kdePackages.breeze;
-      name = "breeze_cursors";
-      size = 24;
+      package = pkgs.bibata-cursors;
+      name = "Bibata-Modern-Ice";
+      size = 20;
     };
 
     fonts = {

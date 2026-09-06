@@ -172,8 +172,14 @@
   ];
   services.displayManager.sddm = {
     enable = true;
-    wayland.enable = true;
+    theme = "catppuccin-mocha-mauve";
+    extraPackages = with pkgs; [
+      kdePackages.qt5compat
+      kdePackages.qtsvg
+      kdePackages.qtmultimedia # Required for video backgrounds/audio
+    ];
   };
+
   programs.kdeconnect.enable = true;
   xdg.portal = {
     enable = true;
@@ -207,6 +213,7 @@
     nixpkgs-fmt
     nixfmt
     neovim
+    pkgs.catppuccin-sddm
     kdePackages.plasma-browser-integration
     kdePackages.kamoso
     wget
