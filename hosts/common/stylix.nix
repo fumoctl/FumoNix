@@ -68,6 +68,7 @@
     {
       stylix.targets.kde.enable = true;
       stylix.targets.gtk.enable = true;
+      stylix.targets.gtk.flatpakSupport.enable = true;
       stylix.targets.vscode.enable = false;
       stylix.targets.qt.enable = false;
     }
