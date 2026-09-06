@@ -16,7 +16,7 @@
   home.homeDirectory = "/home/fumoctl";
   home.stateVersion = "26.05";
   home.packages = with pkgs; [
-
+    unstable.ptyxis
   ];
 
   home.file.".ssh/config_source" = {
@@ -79,6 +79,25 @@
     mutableExtensionsDir = true;
   };
 
+  xdg.desktopEntries."org.gnome.Ptyxis" = {
+    name = "Ptyxis";
+    genericName = "Terminal";
+    comment = "A terminal for GNOME";
+    # %U passes the directory URI from Dolphin/KDE
+    exec = "ptyxis --new-window %U";
+    icon = "org.gnome.Ptyxis";
+    terminal = false;
+    categories = [ "System" "TerminalEmulator" ];
+    startupNotify = true;
+  };
+
+  # 3. Disable session restore
+  dconf.settings = {
+    "org/gnome/Ptyxis" = {
+      restore-session = false;
+    };
+  };
+
   programs.chromium = {
     enable = true;
     package = pkgs.unstable.brave; # Critical: Points the Chromium module to the Brave binary
@@ -125,7 +144,16 @@
 
   programs.plasma = {
     enable = true;
-    workspace.lookAndFeel = "org.kde.breezedark.desktop";
+    workspace = {
+      theme = "default";
+      colorScheme = "BreezeDark";
+      lookAndFeel = "org.kde.breezedark.desktop";
+      iconTheme = "breeze-dark";
+      cursor = {
+        theme = "breeze_cursors";
+        size = 24;
+      };
+    };
     panels = [
       {
         location = "bottom";
@@ -163,6 +191,20 @@
     };
 
     configFile = {
+      "kcminputrc"."Mouse" = {
+        pointerAccelerationProfile = 1;
+        pointerAcceleration = 0.0;
+      };
+      "kcminputrc"."Libinput"."pointerAccelerationProfile" = 1;
+      "kdeglobals"."General" = {
+        TerminalApplication = "ptyxis";
+        TerminalService = "org.gnome.Ptyxis.desktop";
+        BrowserApplication = "brave-browser.desktop";
+      };
+      "kdeglobals"."KDE Connect" = {
+        # Phone handler
+        tel = "org.kde.kdeconnect.handler.desktop";
+      };
       kwinrc = {
         Desktops.Number = 4;
         Desktops.Rows = 1;
@@ -174,6 +216,43 @@
           "DelayFocusInterval" = 0;
         };
       };
+    };
+  };
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      # Web & Email
+      "text/html" = "brave-browser.desktop";
+      "x-scheme-handler/http" = "brave-browser.desktop";
+      "x-scheme-handler/https" = "brave-browser.desktop";
+      "x-scheme-handler/mailto" = "thunderbird.desktop";
+      "x-scheme-handler/tel" = "org.kde.kdeconnect.handler.desktop";
+
+      # Multimedia
+      "image/png" = "org.kde.gwenview.desktop";
+      "image/jpeg" = "org.kde.gwenview.desktop";
+      "image/webp" = "org.kde.gwenview.desktop";
+      "audio/mpeg" = "org.kde.elisa.desktop";
+      "audio/flac" = "org.kde.elisa.desktop";
+      "audio/x-vorbis+ogg" = "org.kde.elisa.desktop";
+      "video/mp4" = "umpv.desktop";
+      "video/mkv" = "umpv.desktop";
+      "video/webm" = "umpv.desktop";
+      "video/x-matroska" = "umpv.desktop";
+
+      # Documents
+      "text/plain" = "code.desktop";
+      "application/pdf" = "org.kde.okular.desktop";
+
+      # Utilities
+      "inode/directory" = "org.kde.dolphin.desktop";
+      "application/zip" = "org.kde.ark.desktop";
+      "application/x-tar" = "org.kde.ark.desktop";
+      "application/x-7z-compressed" = "org.kde.ark.desktop";
+      "application/vnd.rar" = "org.kde.ark.desktop";
+
+      # Map handler (Geo scheme)
+      "x-scheme-handler/geo" = "google-maps-geo-handler.desktop";
     };
   };
 }

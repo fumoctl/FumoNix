@@ -169,6 +169,7 @@
   services.desktopManager.plasma6.enable = true;
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     discover
+    konsole
   ];
   services.displayManager.sddm = {
     enable = true;
@@ -207,7 +208,6 @@
     nixpkgs-fmt
     nixfmt
     neovim
-    unstable.ptyxis
     kdePackages.plasma-browser-integration
     kdePackages.kamoso
     wget
