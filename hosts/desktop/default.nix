@@ -15,7 +15,7 @@
   networking.hostName = "fumonix-desktop";
 
   boot.loader.limine = {
-    secureBoot.enable = false;
+    secureBoot.enable = true;
   };
 
   boot.kernelPackages = pkgs.linuxPackages_cachyos-lto-znver4;
