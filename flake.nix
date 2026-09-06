@@ -3,6 +3,14 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-26.05";
+    stylix = {
+      url = "github:nix-community/stylix/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
     nur = {
@@ -14,15 +22,13 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+
     plasma-manager = {
       url = "github:nix-community/plasma-manager";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "home-manager";
     };
+
     nyarch-nix = {
       url = "github:fumoctl/Nyarch-Nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -43,16 +49,15 @@
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      nixpkgs-unstable,
-      home-manager,
-      nix-flatpak,
-      plasma-manager,
-      disko,
-      chaotic,
-      ...
+    { self
+    , nixpkgs
+    , nixpkgs-unstable
+    , home-manager
+    , nix-flatpak
+    , plasma-manager
+    , disko
+    , chaotic
+    , ...
     }@inputs:
     {
       nixosConfigurations = {

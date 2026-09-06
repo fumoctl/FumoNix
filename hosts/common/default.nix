@@ -1,14 +1,13 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
+{ config
+, lib
+, pkgs
+, inputs
+, ...
 }:
 
 {
   imports = [
-    
+    ./stylix.nix
   ];
 
   nixpkgs.overlays = [

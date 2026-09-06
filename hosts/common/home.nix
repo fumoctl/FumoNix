@@ -1,9 +1,8 @@
-{
-  config,
-  pkgs,
-  inputs,
-  lib,
-  ...
+{ config
+, pkgs
+, inputs
+, lib
+, ...
 }:
 
 {
@@ -145,14 +144,9 @@
   programs.plasma = {
     enable = true;
     workspace = {
-      theme = "default";
-      colorScheme = "BreezeDark";
-      lookAndFeel = "org.kde.breezedark.desktop";
+      # Handled by Stylix: colorScheme, lookAndFeel, wallpaper, and cursor
+      # Keep only what Stylix doesn't touch, like icon themes if you want Breeze Dark:
       iconTheme = "breeze-dark";
-      cursor = {
-        theme = "breeze_cursors";
-        size = 24;
-      };
     };
     panels = [
       {
@@ -174,6 +168,11 @@
           "org.kde.plasma.systemtray"
           {
             digitalClock = {
+              date = {
+                enable = true;
+                position = "belowTime";
+                format.custom = "dd/MM/yyyy";
+              };
               time.format = "24h";
               calendar.firstDayOfWeek = "monday";
             };
