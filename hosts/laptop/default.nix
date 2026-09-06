@@ -42,14 +42,13 @@
     tailor-gui.enable = true;
   };
 
-  # Motorcomm YT6801 Gigabit Ethernet driver
-  boot.extraModulePackages = [
-    (config.boot.kernelPackages.yt6801.overrideAttrs (old: {
-      makeFlags = (old.makeFlags or [ ]) ++ config.boot.kernelPackages.kernelModuleMakeFlags;
-    }))
-  ];
-
-  boot.kernelModules = [ "yt6801" ];
+  # Motorcomm YT6801 Gigabit Ethernet driver ## Not Needed on linux kernel > 7.0
+  #boot.extraModulePackages = [
+  #  (config.boot.kernelPackages.yt6801.overrideAttrs (old: {
+  #    makeFlags = (old.makeFlags or [ ]) ++ config.boot.kernelPackages.kernelModuleMakeFlags;
+  #  }))
+  #];
+  #boot.kernelModules = [ "yt6801" ];
 
   programs.captive-browser = {
     enable = true;
