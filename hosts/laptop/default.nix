@@ -16,7 +16,9 @@
     secureBoot.enable = false;
   };
 
-  boot.kernelPackages = pkgs.linuxPackages_cachyos-lto-znver4;
+  boot.kernelPackages = pkgs.linuxPackages_cachyos-lto-znver4.extend (final: prev: {
+    tuxedo-drivers = prev.tuxedo-drivers.override { pahole = pkgs.pahole; };
+  });
 
   # NVIDIA
   services.xserver.videoDrivers = [ "nvidia" ];
