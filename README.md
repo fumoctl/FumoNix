@@ -6,7 +6,11 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 
 ## 📸 Screenshots
 
-<!-- Add your screenshots here -->
+<img width="2560" height="1600" alt="Screenshot_20260906_222007" src="https://github.com/user-attachments/assets/03ef3559-ab04-4e81-9c75-dc025d04be39" />
+<img width="2560" height="1600" alt="Screenshot_20260906_222645" src="https://github.com/user-attachments/assets/e33dcddb-e479-4e5c-b5b7-94fc15fa87d0" />
+<img width="2560" height="1600" alt="Screenshot_20260906_222929" src="https://github.com/user-attachments/assets/dc856a55-7c37-401a-9bbf-574296fdbb2c" />
+
+
 
 ---
 
