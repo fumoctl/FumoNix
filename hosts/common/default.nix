@@ -214,7 +214,6 @@
     nixfmt
     neovim
     pkgs.catppuccin-sddm
-    kdePackages.plasma-browser-integration
     kdePackages.kamoso
     wget
     git
