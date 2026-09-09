@@ -46,7 +46,6 @@
 
     # Custom external repository overlays
     inputs.antigravity-nix.overlays.default
-    inputs.nyarch-nix.overlays.default
   ];
 
   # ============================================================================

@@ -29,10 +29,6 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    nyarch-nix = {
-      url = "github:fumoctl/Nyarch-Nix";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
     antigravity-nix = {
       url = "github:jacopone/antigravity-nix";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
