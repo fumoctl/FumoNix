@@ -1,37 +1,60 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
+{ config
+, lib
+, pkgs
+, ...
 }:
 
 {
+  # ============================================================================
+  # 1. CONTAINER VIRTUALIZATION ENGINE (PODMAN)
+  # ============================================================================
   virtualisation = {
-    docker.enable = false; # Disable Docker if using Podman
+    # Explicitly disable standard Docker daemon to prevent conflicts with Podman
+    docker.enable = false;
+
     podman = {
       enable = true;
-      dockerCompat = true; # Aliases docker -> podman
+
+      # Creates symlinks and wrapper scripts alias 'docker' -> 'podman'
+      dockerCompat = true;
+
+      # Enable Docker-compatible UNIX socket (/run/podman/podman.sock)
+      # Essential for Docker Compose, VS Code Dev Containers, and container GUIs
       dockerSocket.enable = true;
+
+      # Enable Netavark / Aardvark-dns internal DNS resolution between containers
       defaultNetwork.settings.dns_enabled = true;
     };
   };
+
+  # ============================================================================
+  # 2. CONTAINER & KUBERNETES MANAGEMENT PACKAGES
+  # ============================================================================
   environment.systemPackages = with pkgs; [
-    podman-tui
-    podman-desktop
-    podman-compose
-    helm
-    kubectl
+    # --- Container Orchestration & Tooling ---
+    podman-compose      # Compose specification implementation for Podman
+    podman-tui          # Interactive terminal UI for inspecting pods and containers
+    podman-desktop      # Graphical desktop dashboard for containers and Kubernetes
+
+    # --- Cloud Native & Kubernetes CLI ---
+    kubectl             # Kubernetes command-line management tool
+    helm                # Kubernetes package manager and chart deployment tool
   ];
 
-  # Enable Podman backend
-  virtualisation.oci-containers.backend = "podman";
+  # ============================================================================
+  # 3. DECLARATIVE OCI CONTAINERS
+  # ============================================================================
+  # Systemd-managed declarative containers using the Podman runtime engine
+  virtualisation.oci-containers = {
+    backend = "podman";
 
-  # Define your containers
-  virtualisation.oci-containers.containers = {
-    my-service = {
-      image = "docker.io/nginx:alpine";
-      autoStart = true;
-      podman.user = "fumoctl";
+    containers = {
+      # Sample declarative service running rootless under user 'fumoctl'
+      my-service = {
+        image = "docker.io/nginx:alpine";
+        autoStart = true;
+        podman.user = "fumoctl";
+      };
     };
   };
 }
