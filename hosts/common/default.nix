@@ -536,6 +536,7 @@
 
     # --- Desktop Environment, Theming & SDDM ---
     catppuccin-sddm           # Catppuccin theme assets for SDDM
+    papirus-icon-theme        # Papirus icon theme for desktop and applications
     kdePackages.kamoso        # Webcam capture tool for KDE
 
     # --- Hardware, GPU & Gaming Performance ---

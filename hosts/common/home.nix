@@ -203,7 +203,7 @@
     workspace = {
       # Stylix manages colorScheme, lookAndFeel, wallpaper, and cursor.
       # Specify icon theme not covered by Stylix:
-      iconTheme = "breeze-dark";
+      iconTheme = "Papirus-Dark";
     };
 
     # Floating bottom taskbar and status widgets
@@ -284,19 +284,6 @@
   # ============================================================================
   # 11. XDG MIME ASSOCIATIONS & SHARED MIME DEFINITIONS
   # ============================================================================
-  # Custom shared-mime-info definition: explicitly registers .nix files as text/x-nix
-  # so file managers (Dolphin, file pickers) recognize Nix syntax rather than generic binary/text
-  xdg.dataFile."mime/packages/nix-syntax.xml".text = ''
-    <?xml version="1.0" encoding="UTF-8"?>
-    <mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
-      <mime-type type="text/x-nix">
-        <comment>Nix expression language</comment>
-        <glob pattern="*.nix"/>
-        <sub-class-of type="text/plain"/>
-      </mime-type>
-    </mime-info>
-  '';
-
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
@@ -311,8 +298,6 @@
       "text/plain" = "code.desktop";
       "text/markdown" = "code.desktop";
       "text/x-markdown" = "code.desktop";
-      "text/x-nix" = "code.desktop";
-      "application/x-nix" = "code.desktop";
 
       # Configuration & Markup
       "application/json" = "code.desktop";

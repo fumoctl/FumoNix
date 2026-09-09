@@ -46,7 +46,17 @@
     };
 
     # ==========================================================================
-    # 4. TYPOGRAPHY & FONT HIERARCHY
+    # 4. ICON THEME
+    # ==========================================================================
+    icons = {
+      enable = true;
+      package = pkgs.papirus-icon-theme;
+      dark = "Papirus-Dark";
+      light = "Papirus-Light";
+    };
+
+    # ==========================================================================
+    # 5. TYPOGRAPHY & FONT HIERARCHY
     # ==========================================================================
     fonts = {
       # Monospace font with programming ligatures and developer glyphs
@@ -83,7 +93,7 @@
     };
 
     # ==========================================================================
-    # 5. SYSTEM & BOOTLOADER TARGETS
+    # 6. SYSTEM & BOOTLOADER TARGETS
     # ==========================================================================
     targets = {
       # Apply coordinated theme and wallpaper to the Limine EFI bootloader menu
@@ -92,7 +102,7 @@
   };
 
   # ============================================================================
-  # 6. USER & DESKTOP ENVIRONMENT THEMING (HOME MANAGER)
+  # 7. USER & DESKTOP ENVIRONMENT THEMING (HOME MANAGER)
   # ============================================================================
   # Stylix configurations passed into Home Manager for user-session applications
   home-manager.sharedModules = [
