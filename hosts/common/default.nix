@@ -291,7 +291,7 @@
   # SDDM Display Manager
   services.displayManager.sddm = {
     enable = true;
-    theme = "catppuccin-mocha-mauve";
+    theme = "catppuccin-mocha-blue";
     extraPackages = with pkgs; [
       kdePackages.qt5compat
       kdePackages.qtsvg
@@ -540,11 +540,14 @@
     sshfs                     # Filesystem integration for KDE Connect
 
     # --- Desktop Environment, Theming & SDDM ---
-    catppuccin-sddm           # Catppuccin theme assets for SDDM
+    (catppuccin-sddm.override {
+      flavor = "mocha";
+      accent = "blue";
+    })                        # Catppuccin Mocha Blue theme assets for SDDM
     (catppuccin-kde.override {
       flavour = [ "mocha" ];
-      accents = [ "mauve" ];
-    })                        # Catppuccin Mocha Mauve theme suite for KDE Plasma 6
+      accents = [ "blue" ];
+    })                        # Catppuccin Mocha Blue theme suite for KDE Plasma 6
     bibata-cursors            # Modern cursor theme matching KDE configuration
     kdePackages.kamoso        # Webcam capture tool for KDE
 

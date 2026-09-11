@@ -180,8 +180,8 @@
     uninstallUnmanaged = false;
   };
 
-    home.file.".local/share/themes/catppuccin-mocha-mauve-standard".source =
-    "${pkgs.catppuccin-gtk.override { accents = [ "mauve" ]; variant = "mocha"; }}/share/themes/catppuccin-mocha-mauve-standard";
+    home.file.".local/share/themes/catppuccin-mocha-blue-standard".source =
+    "${pkgs.catppuccin-gtk.override { accents = [ "blue" ]; variant = "mocha"; }}/share/themes/catppuccin-mocha-blue-standard";
 
   home.activation = {
     # Configure language preference priority for Flatpak runtimes
@@ -206,7 +206,7 @@
         --filesystem=xdg-config/gtk-3.0:ro \
         --filesystem=xdg-config/gtk-4.0:ro \
         --filesystem=xdg-config/kdeglobals:ro \
-        --env=GTK_THEME=catppuccin-mocha-mauve-standard \
+        --env=GTK_THEME=catppuccin-mocha-blue-standard \
         --env=ICON_THEME=breeze-dark
     '';
   };
@@ -220,9 +220,9 @@
     enable = true;
     gtk2.enable = false; # Disables ~/.gtkrc-2.0 to eliminate conflicts with KDE Plasma's kde-gtk-config
     theme = {
-      name = "catppuccin-mocha-mauve-standard";
+      name = "catppuccin-mocha-blue-standard";
       package = pkgs.catppuccin-gtk.override {
-        accents = [ "mauve" ];
+        accents = [ "blue" ];
         variant = "mocha";
       };
     };
@@ -262,8 +262,8 @@
       # Global look-and-feel package
       lookAndFeel = "org.kde.breezedark.desktop";
 
-      # Color scheme (Catppuccin Mocha Mauve matching SDDM)
-      colorScheme = "CatppuccinMochaMauve";
+      # Color scheme (Catppuccin Mocha Blue)
+      colorScheme = "CatppuccinMochaBlue";
 
       # Icon theme
       iconTheme = "breeze-dark";
