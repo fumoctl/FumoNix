@@ -485,7 +485,7 @@
 
     # Custom Proton runner distributions
     extraCompatPackages = with pkgs; [
-      proton-cachyos_x86_64_v3 # CachyOS Zen/x86-64-v3 optimized Proton build
+      proton-cachyos            # CachyOS optimized Proton build
       proton-ge-custom         # GloriousEggroll bleeding-edge Proton runner
     ];
   };

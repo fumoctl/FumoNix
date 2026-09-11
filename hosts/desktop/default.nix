@@ -38,10 +38,8 @@
   # ============================================================================
   # 4. KERNEL & HARDWARE OPTIMIZATION
   # ============================================================================
-  # CachyOS Linux kernel compiled with Link-Time Optimization (LTO) and targeted
-  # specifically for the AMD Zen 4 architecture (znver4). Unlocks AVX-512 extensions,
-  # optimized cache layouts, and the BORE (Burst-Oriented Response Enhancer) CPU scheduler.
-  boot.kernelPackages = pkgs.linuxPackages_cachyos-lto-znver4;
+  # LTS Kernel
+  boot.kernelPackages = pkgs.linuxPackages;
 
   # Low-level Linux kernel boot parameters
   boot.kernelParams = [

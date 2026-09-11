@@ -50,12 +50,8 @@
   # ============================================================================
   # 4. KERNEL & HARDWARE OVERRIDES
   # ============================================================================
-  # CachyOS Linux kernel compiled with Link-Time Optimization (LTO) for AMD Zen 4.
-  # Extended to build tuxedo-drivers with pahole to ensure BTF type information
-  # is correctly generated during module compilation.
-  boot.kernelPackages = pkgs.linuxPackages_cachyos-lto-znver4.extend (final: prev: {
-    tuxedo-drivers = prev.tuxedo-drivers.override { pahole = pkgs.pahole; };
-  });
+  # LTS Kernel
+  boot.kernelPackages = pkgs.linuxPackages
 
   # ============================================================================
   # 5. DUAL-GPU HYBRID GRAPHICS (AMD RADEON IGPU + NVIDIA DGPU PRIME)
@@ -68,9 +64,6 @@
 
     # Use NVIDIA open-source kernel modules (recommended for Turing architecture and newer)
     open = true;
-
-    # CachyOS LTO optimized proprietary driver package
-    package = pkgs.nvidia_cachyos-lto;
 
     # Power management: allows the discrete GPU to enter deep sleep/RTD3 when idle
     powerManagement.enable = true;
