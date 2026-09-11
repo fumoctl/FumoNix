@@ -439,6 +439,9 @@
       "kcminputrc"."Libinput/13991/43129/WL WLMOUSE SWORD X" = {
         PointerAccelerationProfile = 1;
       };
+      "kcminputrc"."Libinput/1133/16500/Logitech G305" = {
+        PointerAccelerationProfile = 1;
+      };
 
       # Default preferred application handlers
       "kdeglobals"."General" = {
