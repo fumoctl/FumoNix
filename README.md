@@ -26,11 +26,11 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 ## 🌟 Features
 
 ### 🎨 Theming & Styling
-- **[Stylix](file:///home/fumoctl/FumoNix/hosts/common/stylix.nix)**: Coordinated system-wide dark theme based on **Tokyo Night Dark** (`base16-schemes`).
+- **[Plasma-Manager](file:///home/fumoctl/FumoNix/hosts/common/home.nix)**: Entirely declarative desktop customization for **KDE Plasma 6** managing global look-and-feel (`org.kde.breezedark.desktop`), color schemes (`CatppuccinMochaMauve`), desktop styling, Nineish wallpapers, widgets, and KWin behavior.
 - **Display Manager**: SDDM customized with the **Catppuccin Mocha Mauve** theme (`catppuccin-sddm`) with Qt multimedia & SVG support.
-- **Bootloader**: Themed Limine bootloader via Stylix.
+- **Bootloader**: Fast, lightweight Limine EFI bootloader.
 - **Typography & Cursors**: JetBrainsMono Nerd Font, Noto Sans/Serif CJK JP, Noto Color Emoji, and `Bibata-Modern-Ice` cursors.
-- **Integrated Toolkits**: Cohesive theming across KDE Plasma 6, GTK, and Flatpak applications.
+- **Integrated Toolkits**: Cohesive theming across KDE Plasma 6, GTK (via Home Manager `gtk`), and Flatpak applications.
 
 ### 🖥️ Desktop & Ergonomics
 - **Desktop Environment**: Declaratively configured **KDE Plasma 6** (Wayland) via [`plasma-manager`](file:///home/fumoctl/FumoNix/hosts/common/home.nix).

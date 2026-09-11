@@ -3,10 +3,6 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-26.05";
-    stylix = {
-      url = "github:nix-community/stylix/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";

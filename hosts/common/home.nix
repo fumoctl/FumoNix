@@ -35,6 +35,9 @@
 
     # Host-side native messaging connector for browser integration
     kdePackages.plasma-browser-integration
+
+    # Modern cursor theme matching KDE configuration
+    bibata-cursors
   ];
 
   # ============================================================================
@@ -177,6 +180,9 @@
     uninstallUnmanaged = false;
   };
 
+    home.file.".local/share/themes/catppuccin-mocha-mauve-standard".source =
+    "${pkgs.catppuccin-gtk.override { accents = [ "mauve" ]; variant = "mocha"; }}/share/themes/catppuccin-mocha-mauve-standard";
+
   home.activation = {
     # Configure language preference priority for Flatpak runtimes
     configureFlatpakLanguages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -192,21 +198,173 @@
     overrideBottlesFsHome = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       ${pkgs.flatpak}/bin/flatpak override --user --filesystem=home com.usebottles.bottles
     '';
+    flatpakThemeOverrides = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      ${pkgs.flatpak}/bin/flatpak override --user \
+        --filesystem=/nix/store:ro \
+        --filesystem=xdg-data/themes:ro \
+        --filesystem=xdg-data/icons:ro \
+        --filesystem=xdg-config/gtk-3.0:ro \
+        --filesystem=xdg-config/gtk-4.0:ro \
+        --filesystem=xdg-config/kdeglobals:ro \
+        --env=GTK_THEME=catppuccin-mocha-mauve-standard \
+        --env=ICON_THEME=breeze-dark
+    '';
   };
 
   # ============================================================================
-  # 10. KDE PLASMA 6 DESKTOP MANAGEMENT (PLASMA-MANAGER)
+  # 10. GTK THEME CONSISTENCY (FOR NON-QT APPLICATIONS)
+  # ============================================================================
+  # Ensures GTK applications (such as Ptyxis terminal and file pickers) adhere
+  # to the same dark palette, Breeze-Dark icons, and Bibata cursor theme.
+  gtk = {
+    enable = true;
+    gtk2.enable = false; # Disables ~/.gtkrc-2.0 to eliminate conflicts with KDE Plasma's kde-gtk-config
+    theme = {
+      name = "catppuccin-mocha-mauve-standard";
+      package = pkgs.catppuccin-gtk.override {
+        accents = [ "mauve" ];
+        variant = "mocha";
+      };
+    };
+    iconTheme = {
+      name = "breeze-dark";
+      package = pkgs.kdePackages.breeze-icons;
+    };
+    cursorTheme = {
+      name = "Bibata-Modern-Ice";
+      size = 20;
+      package = pkgs.bibata-cursors;
+    };
+    font = {
+      name = "Noto Sans CJK JP";
+      size = 10;
+      package = pkgs.noto-fonts-cjk-sans;
+    };
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
+  # ============================================================================
+  # 11. KDE PLASMA 6 DECLARATIVE DESKTOP CONFIGURATION (PLASMA-MANAGER)
   # ============================================================================
   programs.plasma = {
     enable = true;
+    overrideConfig = true; # Wipes unmanaged imperative KDE keys on login
 
+    # --------------------------------------------------------------------------
+    # WORKSPACE & THEMING
+    # --------------------------------------------------------------------------
     workspace = {
-      # Stylix manages colorScheme, lookAndFeel, wallpaper, and cursor.
-      # Specify icon theme not covered by Stylix:
-      iconTheme = "Papirus-Dark";
+      # Global look-and-feel package
+      lookAndFeel = "org.kde.breezedark.desktop";
+
+      # Color scheme (Catppuccin Mocha Mauve matching SDDM)
+      colorScheme = "CatppuccinMochaMauve";
+
+      # Icon theme
+      iconTheme = "breeze-dark";
+
+      # Cursor theme and geometry
+      cursor = {
+        theme = "Bibata-Modern-Ice";
+        size = 20;
+      };
+
+      # Desktop background wallpaper
+      wallpaper = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath}";
     };
 
-    # Floating bottom taskbar and status widgets
+    # --------------------------------------------------------------------------
+    # TYPOGRAPHY & DESKTOP FONTS
+    # --------------------------------------------------------------------------
+    fonts = {
+      # Standard application UI font
+      general = {
+        family = "Noto Sans CJK JP";
+        pointSize = 10;
+      };
+
+      # Monospace font for code, terminal widgets, and editors
+      fixedWidth = {
+        family = "JetBrainsMono Nerd Font";
+        pointSize = 10;
+      };
+
+      # Small UI elements, badges, and sublabels
+      small = {
+        family = "Noto Sans CJK JP";
+        pointSize = 8;
+      };
+
+      # Toolbar button labels
+      toolbar = {
+        family = "Noto Sans CJK JP";
+        pointSize = 10;
+      };
+
+      # Application menu items and dropdowns
+      menu = {
+        family = "Noto Sans CJK JP";
+        pointSize = 10;
+      };
+
+      # Window titlebars
+      windowTitle = {
+        family = "Noto Sans CJK JP";
+        pointSize = 10;
+      };
+    };
+
+    # --------------------------------------------------------------------------
+    # KWIN WINDOW MANAGER
+    # --------------------------------------------------------------------------
+    kwin = {
+      # Virtual desktop workspace layout
+      virtualDesktops = {
+        number = 4;
+        rows = 1;
+      };
+
+      # Window titlebar action buttons
+      titlebarButtons = {
+        left = [ "more-window-actions" ];
+        right = [ "minimize" "maximize" "close" ];
+      };
+
+      # Window management effects
+      effects = {
+        blur.enable = true;
+      };
+    };
+
+    # --------------------------------------------------------------------------
+    # SCREEN LOCKER (KSCREENLOCKER)
+    # --------------------------------------------------------------------------
+    kscreenlocker = {
+      autoLock = true;
+      timeout = 10; # Lock after 10 minutes of inactivity
+      lockOnResume = true;
+      passwordRequired = true;
+      passwordRequiredDelay = 0;
+      appearance.wallpaper = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath}";
+    };
+
+    # --------------------------------------------------------------------------
+    # SESSION MANAGEMENT
+    # --------------------------------------------------------------------------
+    session = {
+      sessionRestore = {
+        restoreOpenApplicationsOnLogin = "startWithEmptySession";
+      };
+    };
+
+    # --------------------------------------------------------------------------
+    # PANELS & STATUS WIDGETS
+    # --------------------------------------------------------------------------
     panels = [
       {
         location = "bottom";
@@ -219,7 +377,15 @@
               sortAlphabetically = true;
             };
           }
-          "org.kde.plasma.icontasks"
+          {
+          iconTasks = {
+            launchers = [
+              "applications:org.gnome.Ptyxis.desktop"
+              "applications:org.kde.dolphin.desktop"
+              "applications:brave-browser.desktop"
+            ];
+          };
+          }
           "org.kde.plasma.marginsseparator"
           {
             pager = { };
@@ -241,7 +407,9 @@
       }
     ];
 
-    # Spectacle screenshot keyboard shortcuts
+    # --------------------------------------------------------------------------
+    # SHORTCUTS (SPECTACLE & SYSTEM ACTIONS)
+    # --------------------------------------------------------------------------
     spectacle.shortcuts = {
       captureEntireDesktop = "Meta+Print";
       captureRectangularRegion = "Meta+Shift+Print";
@@ -249,14 +417,28 @@
       launch = "";
     };
 
-    # Low-level KDE configuration files (kdeglobals, kcminputrc, kwinrc)
+    # --------------------------------------------------------------------------
+    # LOW-LEVEL KDE CONFIGURATION (KCMINPUTRC, KDEGLOBALS, KWINRC)
+    # --------------------------------------------------------------------------
     configFile = {
-      # Flat mouse acceleration profile (1:1 sensor input)
+      # Flat mouse acceleration profile (1:1 direct sensor input)
       "kcminputrc"."Mouse" = {
         pointerAccelerationProfile = 1;
         pointerAcceleration = 0.0;
       };
-      "kcminputrc"."Libinput"."pointerAccelerationProfile" = 1;
+      "kcminputrc"."Libinput" = {
+        pointerAccelerationProfile = 1;
+      };
+      "kcminputrc"."Libinput/Defaults" = {
+        pointerAccelerationProfile = 1;
+      };
+
+      "kcminputrc"."Libinput/13991/43128/WL WLMOUSE SWORD X 8K RECEIVER" = {
+        PointerAccelerationProfile = 1;
+      };
+      "kcminputrc"."Libinput/13991/43129/WL WLMOUSE SWORD X" = {
+        PointerAccelerationProfile = 1;
+      };
 
       # Default preferred application handlers
       "kdeglobals"."General" = {
@@ -266,6 +448,12 @@
       };
       "kdeglobals"."KDE Connect" = {
         tel = "org.kde.kdeconnect.handler.desktop";
+      };
+
+      # Disable splash screen animation for immediate desktop presentation
+      "ksplashrc"."KSplash" = {
+        Engine = "none";
+        Theme = "None";
       };
 
       # KWin window manager settings
@@ -282,7 +470,7 @@
   };
 
   # ============================================================================
-  # 11. XDG MIME ASSOCIATIONS & SHARED MIME DEFINITIONS
+  # 12. XDG MIME ASSOCIATIONS & SHARED MIME DEFINITIONS
   # ============================================================================
   xdg.mimeApps = {
     enable = true;

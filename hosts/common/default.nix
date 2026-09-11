@@ -6,13 +6,7 @@
 }:
 
 {
-  # ============================================================================
-  # 1. MODULE IMPORTS
-  # ============================================================================
-  imports = [
-    # System-wide aesthetic theming (Catppuccin, wallpaper, fonts, GTK/Qt styling)
-    ./stylix.nix
-  ];
+
 
   # ============================================================================
   # 2. NIX PACKAGE MANAGER & FLAKES CONFIGURATION
@@ -258,6 +252,9 @@
       ipafont
       kochi-substitute
 
+      # Emoji typography
+      noto-fonts-color-emoji
+
       # Standard metric-compatible fonts
       liberation_ttf
 
@@ -269,6 +266,14 @@
       nerd-fonts.fira-code
       nerd-fonts.jetbrains-mono
     ];
+
+    # Fontconfig fallback font hierarchies
+    fontconfig.defaultFonts = {
+      monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono CJK JP" ];
+      sansSerif = [ "Noto Sans CJK JP" "Liberation Sans" ];
+      serif = [ "Noto Serif CJK JP" "Liberation Serif" ];
+      emoji = [ "Noto Color Emoji" ];
+    };
   };
 
   # ============================================================================
@@ -536,7 +541,11 @@
 
     # --- Desktop Environment, Theming & SDDM ---
     catppuccin-sddm           # Catppuccin theme assets for SDDM
-    papirus-icon-theme        # Papirus icon theme for desktop and applications
+    (catppuccin-kde.override {
+      flavour = [ "mocha" ];
+      accents = [ "mauve" ];
+    })                        # Catppuccin Mocha Mauve theme suite for KDE Plasma 6
+    bibata-cursors            # Modern cursor theme matching KDE configuration
     kdePackages.kamoso        # Webcam capture tool for KDE
 
     # --- Hardware, GPU & Gaming Performance ---
