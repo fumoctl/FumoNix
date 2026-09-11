@@ -56,7 +56,7 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 - **Frame Generation**: Lossless Scaling Vulkan layer (`lsfg-vk`) and UI (`lsfg-vk-ui`).
 
 ### 🔒 Security & Hardened Networking
-- **DNS-over-TLS & DNSSEC**: Native **`systemd-resolved`** configuration enforcing DNS-over-TLS and DNSSEC with AdGuard DNS (`dns.adguard-dns.com`).
+- **DNS-over-TLS & DNSSEC**: Native **`systemd-resolved`** configuration enforcing DNS-over-TLS and DNSSEC with AdGuard DNS (`dns.adguard-dns.com`), backed by Quad9 (`dns.quad9.net`) and Mullvad Base (`base.dns.mullvad.net`) encrypted fallbacks.
 - **Network Privacy**: NetworkManager configured with MAC address randomization (`stable-temporary` for Wi-Fi and Ethernet) and IPv6 privacy extensions (`ip6-privacy = 2`).
 - **Firewall**: Modern `nftables` firewall with selective ports for KDE Connect (1714–1764 TCP/UDP) and Steam.
 - **Captive Portals**: `captive-browser` integrated for public networks on laptop.

@@ -142,24 +142,29 @@
   # Disable unbound DNS resolver in favor of systemd-resolved
   services.unbound.enable = false;
 
-  # DNS-over-TLS (DoT) via AdGuard DNS with DNSSEC validation
+  # DNS-over-TLS (DoT) via AdGuard DNS with DNSSEC validation, Quad9 & Mullvad Base fallback
   services.resolved = {
     enable = true;
     settings = {
       Resolve = {
-        dnssec = "true";
-        dnsovertls = "true";
+        DNSSEC = "true";
+        DNSOverTLS = "true";
         DNS = [
           "94.140.14.14#dns.adguard-dns.com"
           "94.140.15.15#dns.adguard-dns.com"
           "2a10:50c0::ad1:ff#dns.adguard-dns.com"
           "2a10:50c0::ad2:ff#dns.adguard-dns.com"
         ];
-        fallbackDns = [
-          "94.140.14.14#dns.adguard-dns.com"
-          "94.140.15.15#dns.adguard-dns.com"
-          "2a10:50c0::ad1:ff#dns.adguard-dns.com"
-          "2a10:50c0::ad2:ff#dns.adguard-dns.com"
+        FallbackDNS = [
+          # Quad9 (filtered, DNSSEC)
+          "9.9.9.9#dns.quad9.net"
+          "149.112.112.112#dns.quad9.net"
+          "2620:fe::fe#dns.quad9.net"
+          "2620:fe::9#dns.quad9.net"
+
+          # Mullvad Base (malware, ads, and trackers blocked)
+          "194.242.2.4#base.dns.mullvad.net"
+          "2a07:e340::4#base.dns.mullvad.net"
         ];
         # "~." designates these encrypted servers as the default routing domain for all lookups
         Domains = [ "~." ];
