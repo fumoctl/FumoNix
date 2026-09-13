@@ -50,8 +50,10 @@
   # ============================================================================
   # 4. KERNEL & HARDWARE OVERRIDES
   # ============================================================================
-  # LTS Kernel
-  boot.kernelPackages = pkgs.linuxPackages
+  # CachyOS Kernel with LTO and Zen4 architecture optimization (Pahole override for tuxedo drivers)
+  boot.kernelPackages = pkgs.linuxPackages_cachyos-lto-znver4.extend (final: prev: {
+    tuxedo-drivers = prev.tuxedo-drivers.override { pahole = pkgs.pahole; };
+  });
 
   # ============================================================================
   # 5. DUAL-GPU HYBRID GRAPHICS (AMD RADEON IGPU + NVIDIA DGPU PRIME)
@@ -64,6 +66,8 @@
 
     # Use NVIDIA open-source kernel modules (recommended for Turing architecture and newer)
     open = true;
+
+    package = pkgs.nvidia_cachyos-lto;
 
     # Power management: allows the discrete GPU to enter deep sleep/RTD3 when idle
     powerManagement.enable = true;

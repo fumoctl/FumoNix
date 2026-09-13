@@ -38,8 +38,8 @@
   # ============================================================================
   # 4. KERNEL & HARDWARE OPTIMIZATION
   # ============================================================================
-  # LTS Kernel
-  boot.kernelPackages = pkgs.linuxPackages;
+  # CachyOS Kernel with LTO and Zen4 architecture optimization
+  boot.kernelPackages = pkgs.linuxPackages_cachyos-lto-znver4;
 
   # Low-level Linux kernel boot parameters
   boot.kernelParams = [
