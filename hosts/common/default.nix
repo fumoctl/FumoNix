@@ -1,17 +1,18 @@
-{ config
-, lib
-, pkgs
-, inputs
-, ...
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
 }:
 
 {
   # ============================================================================
   # 1. Imports
   # ============================================================================
-    imports = [
-      inputs.windscribe-nixos.nixosModules.windscribe
-      ];
+  imports = [
+    inputs.windscribe-nixos.nixosModules.windscribe
+  ];
   # ============================================================================
   # 2. NIX PACKAGE MANAGER & FLAKES CONFIGURATION
   # ============================================================================
@@ -43,7 +44,7 @@
     })
 
     # Custom external repository overlays
-    inputs.antigravity-nix.overlays.default
+
   ];
 
   # ============================================================================
@@ -177,9 +178,9 @@
   };
 
   programs.windscribe = {
-            enable = true;
-            users = [ "fumoctl" ];
-          };
+    enable = true;
+    users = [ "fumoctl" ];
+  };
 
   # ============================================================================
   # 6. HARDWARE, GRAPHICS & PERIPHERALS
@@ -231,8 +232,8 @@
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true; # 32-bit ALSA support for older Wine/Steam games
-    pulse.enable = true;      # PulseAudio replacement emulation
-    jack.enable = true;       # JACK audio API emulation for professional audio software
+    pulse.enable = true; # PulseAudio replacement emulation
+    jack.enable = true; # JACK audio API emulation for professional audio software
   };
 
   # ============================================================================
@@ -283,9 +284,18 @@
 
     # Fontconfig fallback font hierarchies
     fontconfig.defaultFonts = {
-      monospace = [ "JetBrainsMono Nerd Font" "Noto Sans Mono CJK JP" ];
-      sansSerif = [ "Noto Sans CJK JP" "Liberation Sans" ];
-      serif = [ "Noto Serif CJK JP" "Liberation Serif" ];
+      monospace = [
+        "JetBrainsMono Nerd Font"
+        "Noto Sans Mono CJK JP"
+      ];
+      sansSerif = [
+        "Noto Sans CJK JP"
+        "Liberation Sans"
+      ];
+      serif = [
+        "Noto Serif CJK JP"
+        "Liberation Serif"
+      ];
       emoji = [ "Noto Color Emoji" ];
     };
   };
@@ -299,7 +309,7 @@
   # Exclude default packages managed better via Nix or replaced by preferred alternatives
   environment.plasma6.excludePackages = with pkgs.kdePackages; [
     discover # Nix manages software declaratively; graphical app store is redundant
-    konsole  # Preferred terminal emulator configured separately
+    konsole # Preferred terminal emulator configured separately
   ];
 
   # SDDM Display Manager
@@ -345,11 +355,11 @@
     # Supplemental user groups
     extraGroups = [
       "networkmanager" # Network configuration without root
-      "wheel"          # Sudo / administrative privileges
-      "libvirtd"       # Access to KVM/QEMU virtual machines
-      "adm"            # System log inspection
-      "docker"         # Docker daemon access
-      "podman"         # Podman container management
+      "wheel" # Sudo / administrative privileges
+      "libvirtd" # Access to KVM/QEMU virtual machines
+      "adm" # System log inspection
+      "docker" # Docker daemon access
+      "podman" # Podman container management
     ];
 
     packages = with pkgs; [
@@ -464,12 +474,12 @@
       Preferences = {
         "privacy.privacyandsecurity.fingerprinting.protection" = true;
         "privacy.query_stripping.enabled" = true; # Strips tracking tokens (fbclid, utm_) from URLs
-        "media.peerconnection.enabled" = false;    # Prevents WebRTC from leaking local/VPN IP addresses
-        "network.dns.disablePrefetch" = true;      # Disables preemptive speculative DNS lookups
-        "network.prefetch-next" = false;           # Prevents pre-fetching link destinations
-        "browser.ml.chat.enabled" = false;         # Disables built-in telemetry-based AI integrations
+        "media.peerconnection.enabled" = false; # Prevents WebRTC from leaking local/VPN IP addresses
+        "network.dns.disablePrefetch" = true; # Disables preemptive speculative DNS lookups
+        "network.prefetch-next" = false; # Prevents pre-fetching link destinations
+        "browser.ml.chat.enabled" = false; # Disables built-in telemetry-based AI integrations
         "browser.ml.linkPreview.enabled" = false;
-        "dom.security.https_only_mode" = true;     # Enforces HTTPS everywhere
+        "dom.security.https_only_mode" = true; # Enforces HTTPS everywhere
         "privacy.trackingprotection.enabled" = true;
       };
     };
@@ -487,15 +497,15 @@
   # Steam client and compatibility ecosystem
   programs.steam = {
     enable = true;
-    extest.enable = true;               # Emulate X11 uinput events for controller mapping
-    remotePlay.openFirewall = true;     # Steam Remote Play streaming ports
+    extest.enable = true; # Emulate X11 uinput events for controller mapping
+    remotePlay.openFirewall = true; # Steam Remote Play streaming ports
     dedicatedServer.openFirewall = true;
-    gamescopeSession.enable = true;     # Dedicated Steam Big Picture Gamescope Wayland session
+    gamescopeSession.enable = true; # Dedicated Steam Big Picture Gamescope Wayland session
 
     # Custom Proton runner distributions
     extraCompatPackages = with pkgs; [
-      proton-cachyos            # CachyOS optimized Proton build
-      proton-ge-custom         # GloriousEggroll bleeding-edge Proton runner
+      proton-cachyos # CachyOS optimized Proton build
+      proton-ge-custom # GloriousEggroll bleeding-edge Proton runner
     ];
   };
 
@@ -535,68 +545,65 @@
   # ============================================================================
   environment.systemPackages = with pkgs; [
     # --- Nix & Development Tooling ---
-    nixd                      # Nix language server protocol (LSP)
-    nixpkgs-fmt               # Nixpkgs code formatter
-    nixfmt                    # Official Nix syntax formatter
-    neovim                    # Extensible terminal text editor
-    git                       # Distributed version control system
-    meld                      # Graphical visual diff and merge tool
+    nixd # Nix language server protocol (LSP)
+    nixpkgs-fmt # Nixpkgs code formatter
+    nixfmt # Official Nix syntax formatter
+    neovim # Extensible terminal text editor
+    git # Distributed version control system
+    meld # Graphical visual diff and merge tool
 
     # --- System Diagnostics, Hardware & File Utilities ---
-    fastfetch                 # High-performance system information fetch tool
-    file                      # Determine file types by magic numbers
-    jq                        # Command-line JSON processor
-    pciutils                  # PCI bus inspection utilities (lspci)
-    ethtool                   # Query and control network driver and hardware settings
-    sbctl                     # Secure Boot key manager
-    _7zz                      # 7-Zip archiver (modern 7zz release)
-    unrar                     # RAR archive extraction utility
-    sshfs                     # Filesystem integration for KDE Connect
+    fastfetch # High-performance system information fetch tool
+    file # Determine file types by magic numbers
+    jq # Command-line JSON processor
+    pciutils # PCI bus inspection utilities (lspci)
+    ethtool # Query and control network driver and hardware settings
+    sbctl # Secure Boot key manager
+    _7zz # 7-Zip archiver (modern 7zz release)
+    unrar # RAR archive extraction utility
+    sshfs # Filesystem integration for KDE Connect
 
     # --- Desktop Environment, Theming & SDDM ---
     (catppuccin-sddm.override {
       flavor = "mocha";
       accent = "blue";
-    })                        # Catppuccin Mocha Blue theme assets for SDDM
+    }) # Catppuccin Mocha Blue theme assets for SDDM
     (catppuccin-kde.override {
       flavour = [ "mocha" ];
       accents = [ "blue" ];
-    })                        # Catppuccin Mocha Blue theme suite for KDE Plasma 6
-    bibata-cursors            # Modern cursor theme matching KDE configuration
-    kdePackages.kamoso        # Webcam capture tool for KDE
+    }) # Catppuccin Mocha Blue theme suite for KDE Plasma 6
+    bibata-cursors # Modern cursor theme matching KDE configuration
+    kdePackages.kamoso # Webcam capture tool for KDE
 
     # --- Hardware, GPU & Gaming Performance ---
-    lact                      # Linux AMD/Intel/Nvidia GPU configuration & overclocking GUI
-    mangohud                  # Vulkan/OpenGL overlay for monitoring FPS, temps, and loads
-    goverlay                  # Graphical frontend for configuring MangoHud and vkBasalt
-    unstable.lsfg-vk-ui       # GUI manager for Lossless Scaling Frame Generation (lsfg-vk)
-    mesa-demos                # Mesa OpenGL and Vulkan diagnostic utilities (glxinfo, vkcube)
+    lact # Linux AMD/Intel/Nvidia GPU configuration & overclocking GUI
+    mangohud # Vulkan/OpenGL overlay for monitoring FPS, temps, and loads
+    goverlay # Graphical frontend for configuring MangoHud and vkBasalt
+    unstable.lsfg-vk-ui # GUI manager for Lossless Scaling Frame Generation (lsfg-vk)
+    mesa-demos # Mesa OpenGL and Vulkan diagnostic utilities (glxinfo, vkcube)
 
     # --- Internet, Communication & Productivity ---
-    unstable.equibop          # Discord client
-    thunderbird               # Email, news, and calendar client
+    unstable.equibop # Discord client
+    thunderbird # Email, news, and calendar client
     unstable.onlyoffice-desktopeditors # Comprehensive office suite
 
     # --- Media Playback ---
-    mpv                       # Highly configurable terminal and graphical media player
+    mpv # Highly configurable terminal and graphical media player
 
     # --- Container & Compatibility Layers ---
-    distrobox                 # Containerized mutable Linux environments within NixOS
-    appimage-run              # Wrapper to execute AppImage binaries on NixOS
+    distrobox # Containerized mutable Linux environments within NixOS
+    appimage-run # Wrapper to execute AppImage binaries on NixOS
 
     # --- Networking & Tunneling ---
-    wget                      # Command-line network file downloader
-    dnsmasq                   # Lightweight local DNS/DHCP server
-    sshuttle                  # Transparent proxy server over SSH connection
-    waypipe                   # Network proxy for Wayland applications
+    wget # Command-line network file downloader
+    dnsmasq # Lightweight local DNS/DHCP server
+    sshuttle # Transparent proxy server over SSH connection
+    waypipe # Network proxy for Wayland applications
 
     # --- Specialized & Custom Packages ---
-    google-antigravity        # Antigravity 2.0
-    google-antigravity-cli    # Antigravity command line interface (agy)
-    google-chrome             # Proprietary Chromium browser (Paired with antigravity)
-    unstable.renpy            # Ren'Py visual novel engine
-    unstable.cowsay           # Terminal speech bubble mascot
-    unstable.lolcat           # Rainbow text colorizer
+    unstable.renpy # Ren'Py visual novel engine
+    unstable.cowsay # Terminal speech bubble mascot
+    unstable.lolcat # Rainbow text colorizer
     unstable.haskellPackages.misfortune # Humorous fortune replacement
   ];
 

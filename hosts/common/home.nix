@@ -136,7 +136,7 @@
   # ============================================================================
   programs.vscode = {
     enable = true;
-    package = pkgs.vscode;
+    package = pkgs.unstable.vscode;
 
     # Keep the extensions directory mutable so extensions can be installed/updated
     # directly via VS Code marketplace or VSIX without getting wiped on rebuild
