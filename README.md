@@ -92,7 +92,8 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 4. **Install NixOS**:
 
    ```bash
-   mkdir -p /mnt/var/tmp/nix-build
+   sudo swapon /mnt/.swapvol/swapfile
+   sudo mkdir -p /mnt/var/tmp/nix-build
    TMPDIR=/mnt/var/tmp/nix-build sudo nixos-install --flake github:fumoctl/FumoNix#<hostname>
    ```
    tmpdir avoids out of memory errors when building from source
@@ -122,7 +123,8 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 4. **Partition and Install**:
    ```bash
    sudo nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko --flake .#<hostname>
-   mkdir -p /mnt/var/tmp/nix-build
+   sudo swapon /mnt/.swapvol/swapfile
+   sudo mkdir -p /mnt/var/tmp/nix-build
    TMPDIR=/mnt/var/tmp/nix-build sudo nixos-install --flake github:fumoctl/FumoNix#<hostname>
    reboot
    ```
