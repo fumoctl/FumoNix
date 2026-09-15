@@ -6,8 +6,12 @@
 }:
 
 {
-
-
+  # ============================================================================
+  # 1. Imports
+  # ============================================================================
+    imports = [
+      inputs.windscribe-nixos.nixosModules.windscribe
+      ];
   # ============================================================================
   # 2. NIX PACKAGE MANAGER & FLAKES CONFIGURATION
   # ============================================================================
@@ -88,7 +92,7 @@
   services.userdbd.enable = lib.mkForce false;
 
   # ============================================================================
-  # 5. NETWORKING, FIREWALL & ENCRYPTED DNS
+  # 5. NETWORKING, FIREWALL, VPN & ENCRYPTED DNS
   # ============================================================================
   networking = {
     # Use modern Linux nftables instead of legacy iptables
@@ -171,6 +175,11 @@
       };
     };
   };
+
+  programs.windscribe = {
+            enable = true;
+            users = [ "fumoctl" ];
+          };
 
   # ============================================================================
   # 6. HARDWARE, GRAPHICS & PERIPHERALS
