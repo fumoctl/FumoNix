@@ -73,7 +73,7 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 
 ## 🚀 Installation Guide
 
-### Option A: Installing an Existing Host (`fumonix-desktop` or `fumonix-laptop`)
+### Option A: Installing an Existing Host
 
 1. **Boot into the NixOS Live USB**.
 2. **Verify target disk ID**:
@@ -83,14 +83,8 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
    ```
 3. **Partition, format, and mount with Disko**:
 
-   For Desktop:
    ```bash
-   sudo nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko --flake github:fumoctl/FumoNix#fumonix-desktop
-   ```
-
-   For Laptop:
-   ```bash
-   sudo nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko --flake github:fumoctl/FumoNix#fumonix-laptop
+   sudo nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko --flake github:fumoctl/FumoNix#<hostname>
    ```
 
    _(Or clone the repo locally and use `--flake .#<hostname>`)_
@@ -98,8 +92,10 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 4. **Install NixOS**:
 
    ```bash
-   sudo nixos-install --flake github:fumoctl/FumoNix#<hostname>
+   mkdir -p /mnt/var/tmp/nix-build
+   TMPDIR=/mnt/var/tmp/nix-build sudo nixos-install --flake github:fumoctl/FumoNix#<hostname>
    ```
+   tmpdir avoids out of memory errors when building from source
 
 5. **Reboot**:
    ```bash
@@ -126,7 +122,8 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 4. **Partition and Install**:
    ```bash
    sudo nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko --flake .#<hostname>
-   sudo nixos-install --flake .#<hostname>
+   mkdir -p /mnt/var/tmp/nix-build
+   TMPDIR=/mnt/var/tmp/nix-build sudo nixos-install --flake github:fumoctl/FumoNix#<hostname>
    reboot
    ```
 
