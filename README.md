@@ -92,10 +92,17 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 4. **Install NixOS**:
 
    ```bash
-   mkdir -p /mnt/var/tmp/nix-build
-   TMPDIR=/mnt/var/tmp/nix-build sudo nixos-install --flake github:fumoctl/FumoNix#<hostname>
+   fallocate -l 32G /mnt/swapfile || dd if=/dev/zero of=/mnt/swapfile bs=1M count=32384 status=progress
+   chmod 600 /mnt/swapfile
+   mkswap /mnt/swapfile
+   swapon /mnt/swapfile
    ```
-   tmpdir avoids out of memory errors when building from source
+
+   ```bash
+   mkdir -p /mnt/var/tmp/nix-build
+   TMPDIR=/mnt/var/tmp/nix-build sudo nixos-install --max-jobs 1 --flake github:fumoctl/FumoNix#<hostname>
+   ```
+   tmpdir and swapfiles avoid out of memory errors when building from source
 
 5. **Reboot**:
    ```bash
@@ -122,8 +129,12 @@ A modular, flake-based NixOS configuration featuring declarative disk partitioni
 4. **Partition and Install**:
    ```bash
    sudo nix --extra-experimental-features "nix-command flakes" run github:nix-community/disko/latest -- --mode disko --flake .#<hostname>
+   fallocate -l 32G /mnt/swapfile || dd if=/dev/zero of=/mnt/swapfile bs=1M count=32384 status=progress
+   chmod 600 /mnt/swapfile
+   mkswap /mnt/swapfile
+   swapon /mnt/swapfile
    mkdir -p /mnt/var/tmp/nix-build
-   TMPDIR=/mnt/var/tmp/nix-build sudo nixos-install --flake github:fumoctl/FumoNix#<hostname>
+   TMPDIR=/mnt/var/tmp/nix-build sudo nixos-install --max-jobs 1 --flake github:fumoctl/FumoNix#<hostname>
    reboot
    ```
 

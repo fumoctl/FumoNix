@@ -47,7 +47,7 @@
   ];
 
   # ============================================================================
-  # 3. BOOTLOADER & KERNEL SUBSYSTEM
+  # 3. BOOTLOADER KERNEL and SWAP
   # ============================================================================
   boot = {
     # Modern, lightweight, multiprotocol Limine bootloader
@@ -69,6 +69,15 @@
       "vm.max_map_count" = 2147483642;
     };
   };
+
+  swapDevices = [
+  {
+    device = "/swapfile";
+    # Size in megabytes (optional if the file already exists, 
+    # but NixOS can manage/resize it automatically if specified)
+    size = 32384; 
+  }
+];
 
   # ============================================================================
   # 4. SECURITY & SYSTEM RESOURCE LIMITS
