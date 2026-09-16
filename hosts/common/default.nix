@@ -44,7 +44,8 @@
     })
 
     # Custom external repository overlays
-
+    inputs.github-copilot-nix.overlays.default
+    inputs.antigravity-nix.overlays.default
   ];
 
   # ============================================================================
@@ -605,6 +606,11 @@
     unstable.cowsay # Terminal speech bubble mascot
     unstable.lolcat # Rainbow text colorizer
     unstable.haskellPackages.misfortune # Humorous fortune replacement
+    github-copilot-desktop
+    github-copilot-cli
+    google-antigravity        # Antigravity 2.0
+    google-antigravity-cli    # Antigravity command line interface (agy)
+    google-chrome
   ];
 
   # ============================================================================
