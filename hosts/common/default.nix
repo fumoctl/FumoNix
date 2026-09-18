@@ -130,6 +130,9 @@
     firewall = {
       enable = true;
       checkReversePath = "loose";
+      # VPN ports for obfuscation protocols
+      allowedUDPPorts = [ 443 ];
+      allowedTCPPorts = [ 443 ];
       # Ports 1714-1764 TCP/UDP for KDE Connect pairing, notification sync, and file transfer
       allowedTCPPortRanges = [
         {
