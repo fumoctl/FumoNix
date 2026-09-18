@@ -129,6 +129,7 @@
 
     firewall = {
       enable = true;
+      checkReversePath = "loose";
       # Ports 1714-1764 TCP/UDP for KDE Connect pairing, notification sync, and file transfer
       allowedTCPPortRanges = [
         {
