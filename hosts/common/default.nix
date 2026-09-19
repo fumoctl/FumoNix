@@ -11,7 +11,7 @@
   # 1. Imports
   # ============================================================================
   imports = [
-    inputs.windscribe-nixos.nixosModules.windscribe
+    
   ];
   # ============================================================================
   # 2. NIX PACKAGE MANAGER & FLAKES CONFIGURATION
@@ -63,7 +63,7 @@
 
     # Kernel modules loaded at boot:
     # - ntsync: Fast Windows NT synchronization primitives driver (Wine/Proton mutex/event acceleration)
-    kernelModules = [ "ntsync" ];
+    kernelModules = [ "ntsync" "tun" "wireguard" ];
 
     # Low-level Linux kernel sysctl tuning
     kernel.sysctl = {
@@ -130,6 +130,8 @@
     firewall = {
       enable = true;
       checkReversePath = "loose";
+      # Include the TUN interface for VPN traffic
+      trustedInterfaces = [ "tun0" "tun2" "amn0" ];
       # VPN ports for obfuscation protocols
       allowedUDPPorts = [ 443 ];
       allowedTCPPorts = [ 443 ];
@@ -182,9 +184,9 @@
     };
   };
 
-  programs.windscribe = {
+  programs.amnezia-vpn = {
     enable = true;
-    users = [ "fumoctl" ];
+    package = pkgs.unstable.amnezia-vpn;
   };
 
   # ============================================================================
@@ -604,6 +606,10 @@
     dnsmasq # Lightweight local DNS/DHCP server
     sshuttle # Transparent proxy server over SSH connection
     waypipe # Network proxy for Wayland applications
+    iptables # Administration tool for IPv4/IPv6 packet filtering and NAT
+    iproute2 # Networking utilities for controlling TCP/IP networking and traffic
+    wireguard-tools # Tools for managing WireGuard VPN tunnels
+    openresolv # Utility for managing DNS resolution with multiple sources
 
     # --- Specialized & Custom Packages ---
     unstable.renpy # Ren'Py visual novel engine
