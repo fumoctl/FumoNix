@@ -32,9 +32,10 @@
     backend = "podman";
 
     containers = {
-      almalinux10 = {
-        image = "docker.io/almalinux:latest";
-        autoStart = false;
+      almalinux = {
+        image = "docker.io/library/almalinux:latest";
+        autoStart = true;
+        cmd = [ "sleep" "infinity" ];
         podman.user = "fumoctl";
       };
     };
