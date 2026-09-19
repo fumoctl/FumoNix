@@ -6,46 +6,26 @@
 }:
 
 {
-  # ============================================================================
-  # 1. MODULE IMPORTS
-  # ============================================================================
   imports = [
-    # Declarative Flatpak management for user profiles
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
 
-    # Declarative KDE Plasma 6 desktop configuration (panels, widgets, KWin rules)
     inputs.plasma-manager.homeModules.plasma-manager
   ];
 
-  # ============================================================================
-  # 2. USER IDENTITY & STATE VERSION
-  # ============================================================================
   home = {
     username = "fumoctl";
     homeDirectory = "/home/fumoctl";
-    stateVersion = "26.05"; #Dont modify this once the system is installed
+    stateVersion = "26.05";
   };
 
-  # ============================================================================
-  # 3. USER PACKAGES
-  # ============================================================================
   home.packages = with pkgs; [
-    # Modern GNOME container-ready terminal emulator with tabbed interface
     unstable.ptyxis
 
-    # Host-side native messaging connector for browser integration
     kdePackages.plasma-browser-integration
 
-    # Modern cursor theme matching KDE configuration
     bibata-cursors
   ];
 
-  # ============================================================================
-  # 4. SSH & SECURITY CONFIGURATION
-  # ============================================================================
-  # OpenSSH strictly rejects configuration files with permissive file modes.
-  # Since Nix store symlinks are world-readable, we write to a source file and copy
-  # it into place with strict 0600 permissions upon any configuration changes.
   home.file.".ssh/config_source" = {
     text = ''
       Host github.com
@@ -63,16 +43,12 @@
     '';
   };
 
-  # ============================================================================
-  # 5. VERSION CONTROL (GIT & GITHUB CLI)
-  # ============================================================================
   programs.git = {
     enable = true;
 
-    # Cryptographic commit signing
     signing = {
       key = "35FAC098F119E8FA";
-      signByDefault = true; # Enforce signed commits by default
+      signByDefault = true;
     };
 
     settings = {
@@ -83,15 +59,11 @@
     };
   };
 
-  # GitHub command-line interface with OAuth credential helper
   programs.gh = {
     enable = true;
     gitCredentialHelper.enable = true;
   };
 
-  # ============================================================================
-  # 6. SHELL & TERMINAL (ZSH & PTYXIS)
-  # ============================================================================
   programs.zsh = {
     enable = true;
     dotDir = config.home.homeDirectory;
@@ -108,12 +80,10 @@
     };
   };
 
-  # Custom desktop entry for Ptyxis terminal to enable "Open Terminal Here" in Dolphin
   xdg.desktopEntries."org.gnome.Ptyxis" = {
     name = "Ptyxis";
     genericName = "Terminal";
     comment = "A terminal for GNOME";
-    # %U passes the current working directory URI from Dolphin/KDE
     exec = "ptyxis --new-window %U";
     icon = "org.gnome.Ptyxis";
     terminal = false;
@@ -124,28 +94,19 @@
     startupNotify = true;
   };
 
-  # Ptyxis terminal preferences: disable automatic session restoration so windows open clean
   dconf.settings = {
     "org/gnome/Ptyxis" = {
       restore-session = false;
     };
   };
 
-  # ============================================================================
-  # 7. CODE EDITOR (VISUAL STUDIO CODE)
-  # ============================================================================
   programs.vscode = {
     enable = true;
     package = pkgs.unstable.vscode;
 
-    # Keep the extensions directory mutable so extensions can be installed/updated
-    # directly via VS Code marketplace or VSIX without getting wiped on rebuild
     mutableExtensionsDir = true;
   };
 
-  # ============================================================================
-  # 8. WEB BROWSER (BRAVE & PLASMA INTEGRATION)
-  # ============================================================================
   programs.brave = {
     enable = true;
     extensions = [
@@ -164,18 +125,15 @@
   xdg.configFile."BraveSoftware/Brave-Browser/NativeMessagingHosts/org.kde.plasma.browser_integration.json".source =
     "${pkgs.kdePackages.plasma-browser-integration}/etc/chromium/native-messaging-hosts/org.kde.plasma.browser_integration.json";
 
-  # ============================================================================
-  # 9. DECLARATIVE FLATPAK MANAGEMENT & RUNTIME OVERRIDES
-  # ============================================================================
   services.flatpak = {
     enable = true;
     packages = [
-      "com.github.tchx84.Flatseal"      # Flatpak permission management GUI
-      "com.obsproject.Studio"           # Video recording and live streaming
-      "com.usebottles.bottles"          # Wine prefix & gaming environment manager
-      "com.vysp3r.ProtonPlus"           # Proton, Wine, and DXVK version manager
-      "com.github.Matoking.protontricks" # Winetricks GUI/CLI for Steam Proton
-      "com.ranfdev.DistroShelf"         # Distrobox graphical container manager
+      "com.github.tchx84.Flatseal"
+      "com.obsproject.Studio"
+      "com.usebottles.bottles"
+      "com.vysp3r.ProtonPlus"
+      "com.github.Matoking.protontricks"
+      "com.ranfdev.DistroShelf"
     ];
     update.auto = {
       enable = true;
@@ -184,21 +142,18 @@
     uninstallUnmanaged = false;
   };
 
-    home.file.".local/share/themes/catppuccin-mocha-blue-standard".source =
+  home.file.".local/share/themes/catppuccin-mocha-blue-standard".source =
     "${pkgs.catppuccin-gtk.override { accents = [ "blue" ]; variant = "mocha"; }}/share/themes/catppuccin-mocha-blue-standard";
 
   home.activation = {
-    # Configure language preference priority for Flatpak runtimes
     configureFlatpakLanguages = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       ${pkgs.flatpak}/bin/flatpak config --user --set languages "en;ja"
     '';
 
-    # Fix OBS Studio Qt plugin crashes by scrubbing host-inherited Qt environment variables
     fixobsqt = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       ${pkgs.flatpak}/bin/flatpak override --user --unset-env=QT_PLUGIN_PATH --unset-env=LD_LIBRARY_PATH --unset-env=QT_QPA_PLATFORM_PLUGIN_PATH com.obsproject.Studio
     '';
 
-    # Grant Bottles full home directory filesystem access for managing custom prefixes and game folders
     overrideBottlesFsHome = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       ${pkgs.flatpak}/bin/flatpak override --user --filesystem=home com.usebottles.bottles
     '';
@@ -215,14 +170,9 @@
     '';
   };
 
-  # ============================================================================
-  # 10. GTK THEME CONSISTENCY (FOR NON-QT APPLICATIONS)
-  # ============================================================================
-  # Ensures GTK applications (such as Ptyxis terminal and file pickers) adhere
-  # to the same dark palette, Breeze-Dark icons, and Bibata cursor theme.
   gtk = {
     enable = true;
-    gtk2.enable = false; # Disables ~/.gtkrc-2.0 to eliminate conflicts with KDE Plasma's kde-gtk-config
+    gtk2.enable = false;
     theme = {
       name = "catppuccin-mocha-blue-standard";
       package = pkgs.catppuccin-gtk.override {
@@ -252,123 +202,88 @@
     };
   };
 
-  # ============================================================================
-  # 11. KDE PLASMA 6 DECLARATIVE DESKTOP CONFIGURATION (PLASMA-MANAGER)
-  # ============================================================================
   programs.plasma = {
     enable = true;
-    overrideConfig = true; # Wipes unmanaged imperative KDE keys on login
+    overrideConfig = true;
 
-    # --------------------------------------------------------------------------
-    # WORKSPACE & THEMING
-    # --------------------------------------------------------------------------
     workspace = {
-      # Global look-and-feel package
       lookAndFeel = "org.kde.breezedark.desktop";
 
-      # Color scheme (Catppuccin Mocha Blue)
       colorScheme = "CatppuccinMochaBlue";
 
-      # Icon theme
       iconTheme = "breeze-dark";
 
-      # Cursor theme and geometry
       cursor = {
         theme = "Bibata-Modern-Ice";
         size = 20;
       };
 
-      # Desktop background wallpaper
       wallpaper = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath}";
     };
 
-    # --------------------------------------------------------------------------
-    # TYPOGRAPHY & DESKTOP FONTS
-    # --------------------------------------------------------------------------
     fonts = {
-      # Standard application UI font
       general = {
         family = "Noto Sans CJK JP";
         pointSize = 10;
       };
 
-      # Monospace font for code, terminal widgets, and editors
       fixedWidth = {
         family = "JetBrainsMono Nerd Font";
         pointSize = 10;
       };
 
-      # Small UI elements, badges, and sublabels
       small = {
         family = "Noto Sans CJK JP";
         pointSize = 8;
       };
 
-      # Toolbar button labels
       toolbar = {
         family = "Noto Sans CJK JP";
         pointSize = 10;
       };
 
-      # Application menu items and dropdowns
       menu = {
         family = "Noto Sans CJK JP";
         pointSize = 10;
       };
 
-      # Window titlebars
       windowTitle = {
         family = "Noto Sans CJK JP";
         pointSize = 10;
       };
     };
 
-    # --------------------------------------------------------------------------
-    # KWIN WINDOW MANAGER
-    # --------------------------------------------------------------------------
     kwin = {
-      # Virtual desktop workspace layout
       virtualDesktops = {
         number = 4;
         rows = 1;
       };
 
-      # Window titlebar action buttons
       titlebarButtons = {
         left = [ "more-window-actions" ];
         right = [ "minimize" "maximize" "close" ];
       };
 
-      # Window management effects
       effects = {
         blur.enable = true;
       };
     };
 
-    # --------------------------------------------------------------------------
-    # SCREEN LOCKER (KSCREENLOCKER)
-    # --------------------------------------------------------------------------
     kscreenlocker = {
       autoLock = true;
-      timeout = 10; # Lock after 10 minutes of inactivity
+      timeout = 10;
       lockOnResume = true;
       passwordRequired = true;
       passwordRequiredDelay = 0;
       appearance.wallpaper = "${pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath}";
     };
 
-    # --------------------------------------------------------------------------
-    # SESSION MANAGEMENT
-    # --------------------------------------------------------------------------
     session = {
       sessionRestore = {
         restoreOpenApplicationsOnLogin = "startWithEmptySession";
       };
     };
 
-    # --------------------------------------------------------------------------
-    # PANELS & STATUS WIDGETS
-    # --------------------------------------------------------------------------
     panels = [
       {
         location = "bottom";
@@ -411,9 +326,6 @@
       }
     ];
 
-    # --------------------------------------------------------------------------
-    # SHORTCUTS (SPECTACLE & SYSTEM ACTIONS)
-    # --------------------------------------------------------------------------
     spectacle.shortcuts = {
       captureEntireDesktop = "Meta+Print";
       captureRectangularRegion = "Meta+Shift+Print";
@@ -421,11 +333,7 @@
       launch = "";
     };
 
-    # --------------------------------------------------------------------------
-    # LOW-LEVEL KDE CONFIGURATION (KCMINPUTRC, KDEGLOBALS, KWINRC)
-    # --------------------------------------------------------------------------
     configFile = {
-      # Flat mouse acceleration profile (1:1 direct sensor input)
       "kcminputrc"."Mouse" = {
         pointerAccelerationProfile = 1;
         pointerAcceleration = 0.0;
@@ -447,7 +355,6 @@
         PointerAccelerationProfile = 1;
       };
 
-      # Default preferred application handlers
       "kdeglobals"."General" = {
         TerminalApplication = "ptyxis";
         TerminalService = "org.gnome.Ptyxis.desktop";
@@ -457,18 +364,15 @@
         tel = "org.kde.kdeconnect.handler.desktop";
       };
 
-      # Disable splash screen animation for immediate desktop presentation
       "ksplashrc"."KSplash" = {
         Engine = "none";
         Theme = "None";
       };
 
-      # KWin window manager settings
       kwinrc = {
         Desktops.Number = 4;
         Desktops.Rows = 1;
         "Windows" = {
-          # Instant focus-follows-mouse window activation
           "FocusPolicy" = "FocusFollowsMouse";
           "DelayFocusInterval" = 0;
         };
@@ -476,25 +380,19 @@
     };
   };
 
-  # ============================================================================
-  # 12. XDG MIME ASSOCIATIONS & SHARED MIME DEFINITIONS
-  # ============================================================================
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      # --- Web, Mail & Telephony ---
       "text/html" = "brave-browser.desktop";
       "x-scheme-handler/http" = "brave-browser.desktop";
       "x-scheme-handler/https" = "brave-browser.desktop";
       "x-scheme-handler/mailto" = "thunderbird.desktop";
       "x-scheme-handler/tel" = "org.kde.kdeconnect.handler.desktop";
 
-      # --- Code, Markdown & Text Editing (VS Code) ---
       "text/plain" = "code.desktop";
       "text/markdown" = "code.desktop";
       "text/x-markdown" = "code.desktop";
 
-      # Configuration & Markup
       "application/json" = "code.desktop";
       "application/x-yaml" = "code.desktop";
       "text/yaml" = "code.desktop";
@@ -506,7 +404,6 @@
       "text/x-ini" = "code.desktop";
       "text/x-properties" = "code.desktop";
 
-      # Shell & Scripts
       "application/x-shellscript" = "code.desktop";
       "text/x-shellscript" = "code.desktop";
       "application/x-bash" = "code.desktop";
@@ -514,7 +411,6 @@
       "application/x-python-code" = "code.desktop";
       "text/x-lua" = "code.desktop";
 
-      # Compiled & Web Programming Languages
       "text/x-c" = "code.desktop";
       "text/x-csrc" = "code.desktop";
       "text/x-chdr" = "code.desktop";
@@ -532,40 +428,33 @@
       "text/x-scss" = "code.desktop";
       "text/x-sql" = "code.desktop";
 
-      # Build & Patch Formats
       "text/x-diff" = "code.desktop";
       "text/x-patch" = "code.desktop";
       "text/x-dockerfile" = "code.desktop";
       "text/x-makefile" = "code.desktop";
       "text/x-cmake" = "code.desktop";
 
-      # --- Documents & E-Books ---
       "application/pdf" = "org.kde.okular.desktop";
 
-      # --- Image Viewers ---
       "image/png" = "org.kde.gwenview.desktop";
       "image/jpeg" = "org.kde.gwenview.desktop";
       "image/webp" = "org.kde.gwenview.desktop";
 
-      # --- Audio Players ---
       "audio/mpeg" = "org.kde.elisa.desktop";
       "audio/flac" = "org.kde.elisa.desktop";
       "audio/x-vorbis+ogg" = "org.kde.elisa.desktop";
 
-      # --- Video Players ---
       "video/mp4" = "umpv.desktop";
       "video/mkv" = "umpv.desktop";
       "video/webm" = "umpv.desktop";
       "video/x-matroska" = "umpv.desktop";
 
-      # --- File Manager & Archive Utilities ---
       "inode/directory" = "org.kde.dolphin.desktop";
       "application/zip" = "org.kde.ark.desktop";
       "application/x-tar" = "org.kde.ark.desktop";
       "application/x-7z-compressed" = "org.kde.ark.desktop";
       "application/vnd.rar" = "org.kde.ark.desktop";
 
-      # --- Geographic Navigation ---
       "x-scheme-handler/geo" = "google-maps-geo-handler.desktop";
     };
   };
