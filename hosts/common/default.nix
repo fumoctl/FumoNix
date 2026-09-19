@@ -132,9 +132,6 @@
       checkReversePath = "loose";
       # Include the TUN interface for VPN traffic
       trustedInterfaces = [ "tun0" "tun2" "amn0" ];
-      # VPN ports for obfuscation protocols
-      allowedUDPPorts = [ 443 ];
-      allowedTCPPorts = [ 443 ];
       # Ports 1714-1764 TCP/UDP for KDE Connect pairing, notification sync, and file transfer
       allowedTCPPortRanges = [
         {
