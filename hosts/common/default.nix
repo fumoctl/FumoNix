@@ -396,101 +396,7 @@
   };
 
   # ============================================================================
-  # 12. WEB BROWSER ENTERPRISE POLICIES (FIREFOX HARDENING)
-  # ============================================================================
-  programs.firefox = {
-    enable = true;
-
-    policies = {
-      # 1. Telemetry, Studies & Data Collection (Total Privacy Lockdown)
-      DisableTelemetry = true;
-      DisableFirefoxStudies = true;
-      DisableTelemetryServer = true;
-      DisablePocket = true;
-      DisableFirefoxAccounts = false; # Set to true if you do not use Firefox Sync
-
-      # 2. Search Engine Configuration
-      SearchEngines = {
-        Default = "Brave Search";
-        PreventInstalls = false;
-        Add = [
-          {
-            Name = "Brave Search";
-            URLTemplate = "https://search.brave.com/search?q={searchTerms}";
-            Alias = "@brave";
-            Description = "Privacy-respecting search engine by Brave";
-          }
-        ];
-        Remove = [
-          "Google"
-          "Bing"
-          "Amazon.com"
-          "eBay"
-        ]; # Strip tracking-heavy defaults
-      };
-
-      # 3. Streamlined Declarative Extension Installs
-      ExtensionSettings = {
-        # uBlock Origin (Content blocker)
-        "uBlock0@raymondhill.net" = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-        };
-        # Firefox Multi-Account Containers (Identity isolation)
-        "@testpilot-containers" = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/multi-account-containers/latest.xpi";
-        };
-        # Cookie AutoDelete (Automatic tab/session cookie disposal)
-        "CookieAutoDelete@kennydo.com" = {
-          installation_mode = "force_installed";
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/cookie-autodelete/latest.xpi";
-        };
-      };
-
-      # 4. Built-in Tracking Protection & Clean UI
-      EnableTrackingProtection = {
-        Value = true;
-        Cryptomining = true;
-        Fingerprinting = true;
-        EmailTracking = true;
-      };
-
-      FirefoxHome = {
-        Pocket = false;
-        Snippets = false;
-        SponsoredTopSites = false;
-        SponsoredStories = false;
-        Highlights = false;
-      };
-
-      UserMessaging = {
-        ExtensionRecommendations = false;
-        SkipOnboarding = true;
-        WhatsNew = false;
-        FeatureRecommendations = false;
-      };
-
-      # Standardize locale context to English (US) to reduce browser fingerprint entropy
-      RequestedLocales = [ "en-US" ];
-
-      # 5. Core Privacy Preferences overrides (about:config level via policy)
-      Preferences = {
-        "privacy.privacyandsecurity.fingerprinting.protection" = true;
-        "privacy.query_stripping.enabled" = true; # Strips tracking tokens (fbclid, utm_) from URLs
-        "media.peerconnection.enabled" = false; # Prevents WebRTC from leaking local/VPN IP addresses
-        "network.dns.disablePrefetch" = true; # Disables preemptive speculative DNS lookups
-        "network.prefetch-next" = false; # Prevents pre-fetching link destinations
-        "browser.ml.chat.enabled" = false; # Disables built-in telemetry-based AI integrations
-        "browser.ml.linkPreview.enabled" = false;
-        "dom.security.https_only_mode" = true; # Enforces HTTPS everywhere
-        "privacy.trackingprotection.enabled" = true;
-      };
-    };
-  };
-
-  # ============================================================================
-  # 13. GAMING & PERFORMANCE ACCELERATION
+  # 12. GAMING & PERFORMANCE ACCELERATION
   # ============================================================================
   # Feral Interactive GameMode daemon: dynamic CPU governor and process niceness optimization
   programs.gamemode.enable = true;
@@ -517,7 +423,7 @@
   hardware.steam-hardware.enable = true;
 
   # ============================================================================
-  # 14. VIRTUALIZATION & CONTAINERS
+  # 13. VIRTUALIZATION & CONTAINERS
   # ============================================================================
   # QEMU / KVM hypervisor daemon
   virtualisation.libvirtd = {
@@ -545,7 +451,7 @@
   };
 
   # ============================================================================
-  # 15. SYSTEM PACKAGES
+  # 14. SYSTEM PACKAGES
   # ============================================================================
   environment.systemPackages = with pkgs; [
     # --- Nix & Development Tooling ---
@@ -590,6 +496,7 @@
     unstable.equibop # Discord client
     thunderbird # Email, news, and calendar client
     unstable.onlyoffice-desktopeditors # Comprehensive office suite
+    unstable.mullvad-browser
 
     # --- Media Playback ---
     mpv # Highly configurable terminal and graphical media player
@@ -621,7 +528,7 @@
   ];
 
   # ============================================================================
-  # 16. SYSTEM DOCUMENTATION
+  # 15. SYSTEM DOCUMENTATION
   # ============================================================================
   # Generate index cache for manual pages to speed up 'apropos' and 'man -k'
   documentation.man.cache.enable = true;
