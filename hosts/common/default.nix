@@ -49,11 +49,20 @@
 
     kernel.sysctl = {
       "vm.max_map_count" = 2147483642;
+
+      # Networking & KinD / container parameters
+      "net.ipv4.ip_forward" = 1;
+      "net.ipv6.conf.all.forwarding" = 1;
+      "fs.inotify.max_user_watches" = 524288;
+      "fs.inotify.max_user_instances" = 8192;
     };
   };
 
   systemd.settings.Manager.DefaultLimitNOFILE = "1048576";
-  systemd.user.extraConfig = "DefaultLimitNOFILE=1048576";
+  systemd.user.extraConfig = ''
+    DefaultLimitNOFILE=1048576
+    DefaultDelegate=yes
+  '';
 
   security.pam.loginLimits = [
     {
