@@ -47,14 +47,16 @@
     backend = "podman";
 
     containers = {
-      almalinux = {
-        image = "docker.io/library/almalinux:latest";
-        autoStart = true;
-        cmd = [ "sleep" "infinity" ];
+        postgres = {
+        image = "docker.io/library/postgres:16";
+        autoStart = false;
         podman.user = "fumoctl";
-        volumes = [          
-          "almalinux-data:/data:Z"
-          # or Format: "/host/path:/container/path:Z"
+        ports = [ "5432:5432" ];
+        environment = {
+          POSTGRES_PASSWORD = "postgres";
+        };
+        volumes = [
+          "postgres-data:/var/lib/postgresql/data:Z"
         ];
       };
     };
