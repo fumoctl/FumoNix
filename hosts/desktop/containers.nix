@@ -52,6 +52,10 @@
         autoStart = true;
         cmd = [ "sleep" "infinity" ];
         podman.user = "fumoctl";
+        volumes = [          
+          "almalinux-data:/data:Z"
+          # or Format: "/host/path:/container/path:Z"
+        ];
       };
     };
   };
